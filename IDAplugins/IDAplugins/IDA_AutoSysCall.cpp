@@ -6,6 +6,9 @@ const char ASK_SYSCALL_UI[] = "STARTITEM  0\n"
 						"<~S~ys Num(Hex):N:32:16::>\n";
 
 /*
+*
+*
+*
 */
 void AutoSysCall_Run() {
 	int Sys_No = 0;
@@ -19,17 +22,16 @@ void AutoSysCall_Run() {
 			set_cmt(ea, "No ARM CALL", 1);
 			set_cmt(ea, "No ARM CALL", 0);
 			return;
-			set_cmt(ea, Con_ARM_Call[Sys_No], 1);
-			set_cmt(ea, Con_ARM_Call[Sys_No], 0);
 		}
-		else {//__NR_SYSCALL_BASE 
-			if (Sys_No > 400) {
-				set_cmt(ea, "No Sys CALL", 1);
-				set_cmt(ea, "No Sys CALL", 0);
-				return;
-			}
-			set_cmt(ea, Con_SysCall[Sys_No], 1);
-			set_cmt(ea, Con_SysCall[Sys_No], 0);
+		set_cmt(ea, Con_ARM_Call[Sys_No], 1);
+		set_cmt(ea, Con_ARM_Call[Sys_No], 0);
+	}else {//__NR_SYSCALL_BASE 
+		if (Sys_No > 400) {
+			set_cmt(ea, "No Sys CALL", 1);
+			set_cmt(ea, "No Sys CALL", 0);
+			return;
 		}
+		set_cmt(ea, Con_SysCall[Sys_No], 1);
+		set_cmt(ea, Con_SysCall[Sys_No], 0);
 	}
 }

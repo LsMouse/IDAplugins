@@ -18,7 +18,6 @@ int _stdcall IDAP_init(void) {
 }
 /*
 // Stuff to do when exiting, generally you'd put any sort
-// of clean-up jobs here.火星信息安全研究院 obaby 	http://www.h4ck.org.cn   6 / 7
 */
 void _stdcall IDAP_term(void) {
 	return;
