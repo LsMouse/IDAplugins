@@ -12,8 +12,8 @@ int _stdcall IDAP_init(void) {
 //	Debug_Run(msg("IDA_Demo Run IDAP_init\n"));
 //	SetTimer(NULL, 0, 1000, (TIMERPROC)IDA_TIMER);
 	_MSG("Test Mode IDA_Demo_Main IDAP_init !\n");
-	Back = new IDA_Back();
-	msg("File : %s\n", AskUI::GetFileName());
+//	Back = new IDA_Back();
+//	msg("File : %s\n", AskUI::GetFileName());
 	return PLUGIN_KEEP;
 }
 /*
