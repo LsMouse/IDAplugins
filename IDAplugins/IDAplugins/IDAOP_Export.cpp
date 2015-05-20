@@ -1,32 +1,45 @@
-#define __IDA_Export_C_
-#include"IDA_Header.H"
-const char ASK_EXPORT_UI[] = "Ls EXPORT \n\n\n"
-			"<普通DUMP:R>\n"
-			"<文件更新DUMP:R>>\n";
+#define __IDAOP_Export_C_
+#include <Util_LIB.H>
+/*
+*			IDA插件Export模块
+*主要功能.
+*	1.普通DUMP功能
+*	2.文件更新功能
+*/
+//以下定义UI和模式枚举
+const char ASK_EXPORT_UI[] = "Export Module\n\n\n"
+			"<#普通DUMP# ~Dump~:R>\n"
+			"<#文件更新# ~FileUpdate~:R>>\n";
 enum{
-	MODE_DUMP,
-	MODE_FILEDUMP,
-	MODE_DEBUG_PRINT
+	MODE_Dump,
+	MODE_FileUpdate,
 };
-const char ASK_DUMP_UI[] = "STARTITEM  0\n"
+//Dump UI定义
+const char ASK_DUMP_UI[] = "Export Dump\n"
 				"設置DUMP地址\n"
 				"<~S~tart Mem:N:32:16::>>\n"
 				"<~E~nd Mem:N:32:16::>>\n"
 				"<~S~ize:N:32:16::>>\n";
-const char ASK_FILEDUMP_UI[] = "STARTITEM  0\n"
+//FileUpdate UI定义
+const char ASK_FILEDUMP_UI[] = "Export FileUpdate\n"
 			"設置DUMP地址\n"
 			"<~S~tart Addr:N:32:16::>>\n"
 			"<~F~ile Start Addr:N:32:16::>>\n"
 			"<~S~ize:N:32:16::>>\n";
 /*
+*				Dump功能
 */
-void DUMP_Run(){
+void Dump(){
+	//初始化变量，
 	ulong mem_st = get_screen_ea(), mem_ed = getseg(get_screen_ea())->endEA, mszie = mem_ed - mem_st;
+	//调用UI,设置内容
 	if (AskUsingForm_c(ASK_DUMP_UI, &mem_st, &mem_ed, &mszie) == 0)return;
+	//判断长度是否改变，长度改变则以长度设置内容为准
 	if (mszie == 0){
 		if (mem_ed < mem_st)return;
 		mszie = mem_ed - mem_st;
 	}
+	//获取保存文件路径
 	char* m_filepath = askfile_c(1, "*.*", "保存为");
 	if (m_filepath == NULL)return;
 	FILE* mFile = fopen(m_filepath, "wb");
@@ -36,12 +49,17 @@ void DUMP_Run(){
 		*(m_buf + m_i) = get_full_byte(mem_st + m_i);
 		m_i++;
 	}
+	//写入文件
 	qfwrite(mFile, m_buf, mszie);
 	fclose(mFile);
+	//回收内存
+	free(m_buf);
 }
 /*
+*			FileUpdate
 */
-void FILEDUMP_Run(){
+void FileUpdate(){
+	//初始化变量，
 	ulong mem_st = get_screen_ea(), file_st = get_screen_ea() - getseg(get_screen_ea())->startEA, mszie = getseg(get_screen_ea())->endEA - get_screen_ea();
 	if (AskUsingForm_c(ASK_FILEDUMP_UI, &mem_st, &file_st, &mszie) == 0)return;
 	if (mszie == 0)return;
@@ -61,29 +79,31 @@ void FILEDUMP_Run(){
 	char* newFilename = (char*)malloc(1024); memset(newFilename, 0, 1024);
 	sprintf(newFilename, 1024, "%s.dump", m_filepath);
 	FILE* mSaveFile = fopen(newFilename, "wb");
+	//写入数据
 	qfwrite(mSaveFile, m_buf, fileSzie);
 	fclose(mSaveFile);
 	fclose(mFile);
+	//回收内存
 	free(newFilename);
 	free(m_buf);
 }
 /*
+*				模式说明
+*	1、MODE_Dump -> 普通DUMP
+*	2、MODE_FileUpdate -> 文件更新
 */
-void IDA_Export_Run(){
+int IDA_Export_Run(){
 	int mode = 0;
-	if (AskUsingForm_c(ASK_EXPORT_UI, &mode) == 0)return;
+	if (AskUsingForm_c(ASK_EXPORT_UI, &mode) == 0)return -1;
 	switch (mode){
-	case MODE_DUMP:
-		Debug_Run(msg("IDA_Debug_ALL IDA_Export_Run MODE_DUMP\n"));
-		DUMP_Run();
-
+	case MODE_Dump:
+		Dump();
 	break;
-	case MODE_FILEDUMP:
-		Debug_Run(msg("IDA_Debug_ALL IDA_Export_Run MODE_FILEDUMP\n"));
-		FILEDUMP_Run();
+	case MODE_FileUpdate:
+		FileUpdate();
 	break;
-	default:return;
 	}
+	return 0;
 }
 /*
 */

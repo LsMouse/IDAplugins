@@ -4,11 +4,6 @@
 #include"IDA_Timer.H"
 //主面板模式选择，定在全局变量是为能自动保存模式
 int Main_Mode = 0;
-/*
-// Do checks here to ensure your plug-in is being used within
-// an environment it was written for. Return PLUGIN_SKIP if the
-// checks fail, otherwise return PLUGIN_KEEP.
-*/
 int _stdcall IDAP_init(void) {
 //	Debug_Run(msg("IDA_Demo Run IDAP_init\n"));
 //	SetTimer(NULL, 0, 1000, (TIMERPROC)IDA_TIMER);
@@ -20,27 +15,31 @@ void _stdcall IDAP_term(void) {
 	return;
 }
 //以下定义UI和模式枚举
-const char ASK_MAIN_UI[] = "STARTITEM  1\n\n"
+const char ASK_MAIN_UI[] = "STARTITEM  0\n\n"
 	"<#数据导出# ~E~xport:R:32:16:>\n"
 	"<#数据导入# ~I~mport:R:32:16:>\n"
 	"<#ARM相关功能# ~A~RM:R:32:16:>\n"
 	"<#调试# ~D~ebug:R:32:16:>\n"
-	"<#段数据备份# ~N~ote:R:32:16:>>\n";
+	"<#段数据备份# ~N~ote:R:32:16:>>\n"
+	"<##调试选择##是否打印信息:C>>\n";
 enum{
 	MAIN_Export,
 	MAIN_Import,
 	MAIN_ARM,
 	MAIN_Debug,
-	MAIN_BackSegment,
-	MAIN_OVER
+	MAIN_Notes,
 }MAIN_MODE_ENUM;
 /*
 *				模式说明
-*	1、MODE_ARMOP_Code -> 使用ARM指令修改CODE
-*	2、MODE_ARMOP_SysCall -> 注释系统调用
+*	1、MAIN_Export -> 导出模块
+*	2、MAIN_Import -> 导入模块
+*	3、MAIN_ARM    -> ARM模块
+*	4、MAIN_Debug  -> 调试模块
+*	5、MAIN_Note   -> 注释模块
 */
 void _stdcall IDAP_run(int arg) {// The "meat" of your plug-in    
-	if (AskUsingForm_c(ASK_MAIN_UI, &Main_Mode) == 0)return;
+	ushort EnDebug = 0;
+	if (AskUsingForm_c(ASK_MAIN_UI, &Main_Mode, &EnDebug) == 0)return;
 	switch (Main_Mode){
 	case MAIN_Export:
 		IDA_Export_Run();
@@ -102,7 +101,6 @@ const char ASK_BackSeg_UI[] = "STARTITEM  1\n\n"
 			Back = new IDA_Back();
 		}
 */
-	default:return;
 	}
 	return;
 } 

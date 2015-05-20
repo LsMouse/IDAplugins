@@ -97,10 +97,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="IDAOP_Arm.cpp" />
-    <ClCompile Include="IDA_AutoSysCall.cpp" />
-    <ClCompile Include="IDA_CODE.cpp" />
     <ClCompile Include="IDA_Demo_Main.cpp" />
-    <ClCompile Include="IDA_Export.cpp" />
+    <ClCompile Include="IDAOP_Export.cpp" />
     <ClCompile Include="IDA_Import.cpp" />
     <ClCompile Include="IDA_Mul-Debug.cpp" />
     <ClCompile Include="IDA_Timer.cpp" />

@@ -34,6 +34,9 @@
     <Filter Include="Util_LIB\List">
       <UniqueIdentifier>{601b7bb5-f501-45ca-a440-212f56d85548}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Util_LIB\Debug">
+      <UniqueIdentifier>{4804820d-003e-4799-a93c-6062d4fc5a4f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IDA_Demo_Main.h">
@@ -107,15 +110,6 @@
     <ClCompile Include="IDA_Timer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="IDA_Export.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="IDA_AutoSysCall.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="IDA_CODE.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="IDA_Mul-Debug.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -123,6 +117,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="IDAOP_Arm.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="IDAOP_Export.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

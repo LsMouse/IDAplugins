@@ -15,8 +15,7 @@ char IDAP_help[] = "Ls_IDAplugins";
 // be overridden in the user's plugins.cfg file. 
 char IDAP_name[] = "Ls_IDAplugins";
 // The hot-key the user can use to run your plug-in. 
-char IDAP_hotkey[] = "Alt-M";
-char IDAP_Nohotkey[] = "Alt-M";
+char IDAP_hotkey[] = "Alt-Z";
 // The all-important exported PLUGIN object 
 plugin_t PLUGIN = {
 	IDP_INTERFACE_VERSION,	// IDA version plug-in is written for  
@@ -30,10 +29,11 @@ plugin_t PLUGIN = {
 	IDAP_hotkey				// Hot key to run the plug-in  
 };
 /**/
-extern void IDA_Note_Run();
+extern int IDA_Export_Run();
+extern int	Arm_Options();
+
 extern void Import_Run();
-extern void IDA_Export_Run();
-extern int	Arm_Options(); 
+
 extern void IDA_CODE_Run();
 extern void Mul_Debug_Run();
 /**/
