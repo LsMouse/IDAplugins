@@ -2,6 +2,8 @@
 #include"IDA_Header.H"
 #include"IDA_Demo_Main.h"
 #include"IDA_Timer.H"
+//主面板模式选择，定在全局变量是为能自动保存模式
+int Main_Mode = 0;
 /*
 // Do checks here to ensure your plug-in is being used within
 // an environment it was written for. Return PLUGIN_SKIP if the
@@ -11,71 +13,56 @@ int _stdcall IDAP_init(void) {
 //	Debug_Run(msg("IDA_Demo Run IDAP_init\n"));
 //	SetTimer(NULL, 0, 1000, (TIMERPROC)IDA_TIMER);
 	_MSG("Test Mode IDA_Demo_Main IDAP_init !\n");
-//	Back = new IDA_Back();
-//	msg("File : %s\n", AskUI::GetFileName());
+	Main_Mode = 0;
 	return PLUGIN_KEEP;
 }
-/*
-// Stuff to do when exiting, generally you'd put any sort
-*/
-void _stdcall IDAP_term(void) {
+void _stdcall IDAP_term(void) {	
 	return;
 }
-/*
-// The plugin can be passed an integer argument from[ SWZthe plugins.cfg 
-// file. This can be useful when you want the one plug-in to do 
-// something different depending on the hot-key pressed or menu
-// item selected. 
-*/
+//以下定义UI和模式枚举
 const char ASK_MAIN_UI[] = "STARTITEM  1\n\n"
-						"<通用Code修改:R:32:16::>\n"
-						"<导出:R:32:16:>\n"
-						"<导入:R:32:16:>\n"
-						"<ARM Syscall:R:32:16:>\n"
-						"<多窗口调试:R:32:16:>\n"
-						"<段备份:R:32:16:>>\n";
-const char ASK_BackSeg_UI[] = "STARTITEM  1\n\n"
-						"<加载当前段:R:32:16:>\n"
-						"<整个压缩成一个段:R:32:16:>\n"
-						"<加载段文件:R:32:16:>\n"
-						"<保存段文件:R:32:16:>\n"
-						"<清数据:R:32:16:>>\n";
+	"<#数据导出# ~E~xport:R:32:16:>\n"
+	"<#数据导入# ~I~mport:R:32:16:>\n"
+	"<#ARM相关功能# ~A~RM:R:32:16:>\n"
+	"<#调试# ~D~ebug:R:32:16:>\n"
+	"<#段数据备份# ~N~ote:R:32:16:>>\n";
 enum{
-	MAIN_Code,
 	MAIN_Export,
 	MAIN_Import,
-	MAIN_AutoSysCall,
-	MAIN_Mul_Debug,
+	MAIN_ARM,
+	MAIN_Debug,
 	MAIN_BackSegment,
 	MAIN_OVER
 }MAIN_MODE_ENUM;
+/*
+*				模式说明
+*	1、MODE_ARMOP_Code -> 使用ARM指令修改CODE
+*	2、MODE_ARMOP_SysCall -> 注释系统调用
+*/
 void _stdcall IDAP_run(int arg) {// The "meat" of your plug-in    
-	int mMode = 5;
-	if (AskUsingForm_c(ASK_MAIN_UI, &mMode) == 0)return;
-	switch (mMode){
-	case MAIN_Code:
-		Debug_Run(_MSG("IDA_Debug_ALL Run MAIN_Code\n"));
-		IDA_CODE_Run();
-	break;
+	if (AskUsingForm_c(ASK_MAIN_UI, &Main_Mode) == 0)return;
+	switch (Main_Mode){
 	case MAIN_Export:
-		Debug_Run(_MSG("IDA_Debug_ALL Run MAIN_Export\n"));
 		IDA_Export_Run();
 	break;
 	case MAIN_Import:
-		Debug_Run(_MSG("IDA_Debug_ALL Run MAIN_Export\n"));
 		Import_Run();
 	break;
-	case MAIN_AutoSysCall:
-		Debug_Run(_MSG("IDA_Debug_ALL Run MAIN_AutoSysCall\n"));
-		AutoSysCall_Run();
+	case MAIN_ARM:
+		Arm_Options();
 	break;
-	case MAIN_Mul_Debug:
-		Debug_Run(_MSG("IDA_Debug_ALL Run MAIN_Mul_Debug\n"));
+	case MAIN_Debug:
 		Mul_Debug_Run();
 	break;
-	case MAIN_BackSegment:Debug_Run(_MSG("IDA_Debug_ALL Run MAIN_BackSegment\n"));
-		mMode = 0;
+/*	case MAIN_BackSegment:Debug_Run(_MSG("IDA_Debug_ALL Run MAIN_BackSegment\n"));
+		mMode = 0;/**/
 /*
+const char ASK_BackSeg_UI[] = "STARTITEM  1\n\n"
+"<加载当前段:R:32:16:>\n"
+"<整个压缩成一个段:R:32:16:>\n"
+"<加载段文件:R:32:16:>\n"
+"<保存段文件:R:32:16:>\n"
+"<清数据:R:32:16:>>\n";
 ..					进入BackSegment模式
 ..选择模式下的类型
 ..mMode:
@@ -119,7 +106,3 @@ void _stdcall IDAP_run(int arg) {// The "meat" of your plug-in
 	}
 	return;
 } 
-/*
-	Debug_Run(_MSG("IDA_Debug_ALL Run MAIN_Notes\n"));
-	IDA_Note_Run();
-*/

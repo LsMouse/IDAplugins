@@ -3,8 +3,8 @@ class Util_Base{
 public:
 /**
 * @See	获取已清空的内存
-* @Param	inSize -> 传入内存获取宽度
-* @Return	out_Mem -> 申请的内存起始地址
+* @Param　inSize -> 传入内存获取宽度
+* @Return　out_Mem -> 申请的内存起始地址
 */
 	static void* Alloc(ulong inSize){
 		void* out_Mem = malloc(inSize+1);

@@ -96,6 +96,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="IDAOP_Arm.cpp" />
     <ClCompile Include="IDA_AutoSysCall.cpp" />
     <ClCompile Include="IDA_CODE.cpp" />
     <ClCompile Include="IDA_Demo_Main.cpp" />
@@ -110,6 +111,7 @@
     <ClInclude Include="IDA_Mul-Debug.h" />
     <ClInclude Include="IDA_Timer.H" />
     <ClInclude Include="List.h" />
+    <ClInclude Include="Option_ARMCode.H" />
     <ClInclude Include="Util_LIB\Char\UtilChar.h" />
     <ClInclude Include="Util_LIB\Char\Util_Base.h" />
     <ClInclude Include="Util_LIB\Char\Util_LIB_Char.H" />
@@ -119,6 +121,7 @@
     <ClInclude Include="Util_LIB\IDAClass\Util_LIB_IDAClass.H" />
     <ClInclude Include="Util_LIB\INI\C_INI.h" />
     <ClInclude Include="Util_LIB\INI\Util_LIB_INI.H" />
+    <ClInclude Include="Util_LIB\Linux\SysCall.H" />
     <ClInclude Include="Util_LIB\Linux\Util_LIB_Linux.H" />
     <ClInclude Include="Util_LIB\Linux\__NR_SysCall.H" />
     <ClInclude Include="Util_LIB\List\List.h" />

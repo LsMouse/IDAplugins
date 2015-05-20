@@ -1,4 +1,4 @@
-#ifndef ___NR_SysCall_H_
+#ifdef ___NR_SysCall_H_
 #define ___NR_SysCall_H_
 /*
 *	SysCall
@@ -432,4 +432,7 @@ const char* Con_ARM_Call[] = {
 	"__ARM_NR_usr32",		//(__ARM_NR_BASE + 4)
 	"__ARM_NR_set_tls",		//(__ARM_NR_BASE + 5)
 };/**/
+#else 
+extern const char* Con_SysCall[];
+extern const char* Con_ARM_Call[];
 #endif

@@ -93,6 +93,12 @@
     <ClInclude Include="Util_LIB\Char\Util_Base.h">
       <Filter>Util_LIB\Char</Filter>
     </ClInclude>
+    <ClInclude Include="Util_LIB\Linux\SysCall.H">
+      <Filter>Util_LIB\Linux</Filter>
+    </ClInclude>
+    <ClInclude Include="Option_ARMCode.H">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IDA_Demo_Main.cpp">
@@ -114,6 +120,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="IDA_Import.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="IDAOP_Arm.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

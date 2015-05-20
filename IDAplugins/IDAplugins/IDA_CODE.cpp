@@ -1,7 +1,12 @@
 #define __IDA_CODE_C_
 #include"IDA_Header.H"
+/*	
+*				Code 修改子功能
+*
+*
+*/
 const char ASK_CODE_UI[] = "Ls CODE \n\n\n"
-			"<Change_16BIT:R>\n"
+			"<#16bit#Change_16BIT:R>\n"
 			"<Change_32BIT:R>\n"
 			"<Set BaseOff:R>>\n"
 			"<Change B $:R>\n"
