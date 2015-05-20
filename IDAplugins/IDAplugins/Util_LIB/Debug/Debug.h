@@ -1,13 +1,13 @@
-#include <Util_LIB.H>
+#include "Util_LIB.H"
 //
 class Debug{
 public:
-static bool En;
-	static void SetEnable(bool inEn){
+static int En;
+	static void SetEnable(int inEn){
 		En = inEn;
 	}
 	static void MSG(const char *format, ...){
-		if (!En)return;
+		if (En == 0)return;
 		msg(format);
 	}
 };
