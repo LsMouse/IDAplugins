@@ -102,7 +102,6 @@
     <ClCompile Include="IDA_Export.cpp" />
     <ClCompile Include="IDA_Import.cpp" />
     <ClCompile Include="IDA_Mul-Debug.cpp" />
-    <ClCompile Include="IDA_Notes.cpp" />
     <ClCompile Include="IDA_Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -110,28 +109,20 @@
     <ClInclude Include="IDA_Header.h" />
     <ClInclude Include="IDA_Mul-Debug.h" />
     <ClInclude Include="IDA_Timer.H" />
+    <ClInclude Include="List.h" />
     <ClInclude Include="Util_LIB\Char\UtilChar.h" />
+    <ClInclude Include="Util_LIB\Char\Util_Base.h" />
     <ClInclude Include="Util_LIB\Char\Util_LIB_Char.H" />
     <ClInclude Include="Util_LIB\File\Util_File.h" />
     <ClInclude Include="Util_LIB\File\Util_LIB_File.H" />
     <ClInclude Include="Util_LIB\IDAClass\AskUI.h" />
-    <ClInclude Include="Util_LIB\IDAClass\IDA_Cmt.h" />
-    <ClInclude Include="Util_LIB\IDAClass\IDANote_Func.h" />
-    <ClInclude Include="Util_LIB\IDAClass\IDA_Back.h" />
-    <ClInclude Include="Util_LIB\IDAClass\IDA_Func.h" />
-    <ClInclude Include="Util_LIB\IDAClass\IDA_Notes.h" />
-    <ClInclude Include="Util_LIB\IDAClass\IDA_SDK.h" />
-    <ClInclude Include="Util_LIB\IDAClass\IDA_Seg.h" />
-    <ClInclude Include="Util_LIB\IDAClass\Segment.h" />
     <ClInclude Include="Util_LIB\IDAClass\Util_LIB_IDAClass.H" />
     <ClInclude Include="Util_LIB\INI\C_INI.h" />
     <ClInclude Include="Util_LIB\INI\Util_LIB_INI.H" />
-    <ClInclude Include="Util_LIB\Link\List.h" />
-    <ClInclude Include="Util_LIB\Link\Node.h" />
-    <ClInclude Include="Util_LIB\Link\SingLink.h" />
-    <ClInclude Include="Util_LIB\Link\Util_LIB_Link.H" />
     <ClInclude Include="Util_LIB\Linux\Util_LIB_Linux.H" />
     <ClInclude Include="Util_LIB\Linux\__NR_SysCall.H" />
+    <ClInclude Include="Util_LIB\List\List.h" />
+    <ClInclude Include="Util_LIB\List\Util_LIB_List.H" />
     <ClInclude Include="Util_LIB\Util_LIB.H" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

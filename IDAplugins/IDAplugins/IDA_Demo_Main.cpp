@@ -2,7 +2,6 @@
 #include"IDA_Header.H"
 #include"IDA_Demo_Main.h"
 #include"IDA_Timer.H"
-IDA_Back* Back = NULL;
 /*
 // Do checks here to ensure your plug-in is being used within
 // an environment it was written for. Return PLUGIN_SKIP if the
@@ -29,12 +28,11 @@ void _stdcall IDAP_term(void) {
 // item selected. 
 */
 const char ASK_MAIN_UI[] = "STARTITEM  1\n\n"
-						"<Notes:R:32:16:>\n"
-						"<Code:R:32:16::>\n"
-						"<Export:R:32:16:>\n"
-						"<Import:R:32:16:>\n"
+						"<通用Code修改:R:32:16::>\n"
+						"<导出:R:32:16:>\n"
+						"<导入:R:32:16:>\n"
 						"<ARM Syscall:R:32:16:>\n"
-						"<Mul-Debug:R:32:16:>\n"
+						"<多窗口调试:R:32:16:>\n"
 						"<段备份:R:32:16:>>\n";
 const char ASK_BackSeg_UI[] = "STARTITEM  1\n\n"
 						"<加载当前段:R:32:16:>\n"
@@ -43,7 +41,6 @@ const char ASK_BackSeg_UI[] = "STARTITEM  1\n\n"
 						"<保存段文件:R:32:16:>\n"
 						"<清数据:R:32:16:>>\n";
 enum{
-	MAIN_Notes,
 	MAIN_Code,
 	MAIN_Export,
 	MAIN_Import,
@@ -53,13 +50,9 @@ enum{
 	MAIN_OVER
 }MAIN_MODE_ENUM;
 void _stdcall IDAP_run(int arg) {// The "meat" of your plug-in    
-	int mMode = 6;
+	int mMode = 5;
 	if (AskUsingForm_c(ASK_MAIN_UI, &mMode) == 0)return;
 	switch (mMode){
-	case MAIN_Notes:
-		Debug_Run(_MSG("IDA_Debug_ALL Run MAIN_Notes\n"));
-		IDA_Note_Run();
-	break;
 	case MAIN_Code:
 		Debug_Run(_MSG("IDA_Debug_ALL Run MAIN_Code\n"));
 		IDA_CODE_Run();
@@ -92,7 +85,7 @@ void _stdcall IDAP_run(int arg) {// The "meat" of your plug-in
 ..	3 -> 保存BSegm文件
 ..	4 -> 清全部数据
 */	
-		if (AskUsingForm_c(ASK_BackSeg_UI, &mMode) == 0)return;
+/*		if (AskUsingForm_c(ASK_BackSeg_UI, &mMode) == 0)return;
 		if (mMode == 0) {
 			_MSG("BackSegment this Segment\n");
 			segment_t* mSeg = getseg(get_screen_ea());
@@ -121,7 +114,12 @@ void _stdcall IDAP_run(int arg) {// The "meat" of your plug-in
 			free(Back);
 			Back = new IDA_Back();
 		}
+*/
 	default:return;
 	}
 	return;
 } 
+/*
+	Debug_Run(_MSG("IDA_Debug_ALL Run MAIN_Notes\n"));
+	IDA_Note_Run();
+*/
