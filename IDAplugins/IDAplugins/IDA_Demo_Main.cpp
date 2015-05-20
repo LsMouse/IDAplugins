@@ -8,7 +8,6 @@ int _stdcall IDAP_init(void) {
 //	Debug_Run(msg("IDA_Demo Run IDAP_init\n"));
 //	SetTimer(NULL, 0, 1000, (TIMERPROC)IDA_TIMER);
 	_MSG("Test Mode IDA_Demo_Main IDAP_init !\n");
-
 	Main_Mode = 0;
 	return PLUGIN_KEEP;
 }
@@ -39,7 +38,7 @@ enum{
 *	5、MAIN_Note   -> 注释模块
 */
 void _stdcall IDAP_run(int arg) {// The "meat" of your plug-in    
-	ushort EnDebug = Debug::En;
+	ushort EnDebug = 0;
 	if (AskUsingForm_c(ASK_MAIN_UI, &Main_Mode, &EnDebug) == 0)return;
 	_MSG("EnDebug:%d\n", EnDebug);
 	Debug::SetEnable(EnDebug);
@@ -54,7 +53,7 @@ void _stdcall IDAP_run(int arg) {// The "meat" of your plug-in
 		Arm_Moudle();
 	break;
 	case MAIN_Debug:
-		Mul_Debug_Run();
+		Debug_Moude();
 	break;
 /*	case MAIN_BackSegment:Debug_Run(_MSG("IDA_Debug_ALL Run MAIN_BackSegment\n"));
 		mMode = 0;/**/

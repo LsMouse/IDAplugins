@@ -32,11 +32,6 @@ plugin_t PLUGIN = {
 extern int Export_Module();
 extern int Import_Module();
 extern int Arm_Moudle();
-
-//
-
-
-extern void IDA_CODE_Run();
-extern void Mul_Debug_Run();
+extern int Debug_Moude();
 /**/
 #endif

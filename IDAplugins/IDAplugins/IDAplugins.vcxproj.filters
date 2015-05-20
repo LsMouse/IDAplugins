@@ -48,9 +48,6 @@
     <ClInclude Include="IDA_Timer.H">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="IDA_Mul-Debug.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Util_LIB\Util_LIB.H">
       <Filter>Util_LIB</Filter>
     </ClInclude>
@@ -116,9 +113,6 @@
     <ClCompile Include="IDA_Timer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="IDA_Mul-Debug.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="OP_Export.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -126,6 +120,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="OP_Arm.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="OP_Debug.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

@@ -66,7 +66,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <OutputFile>$(IDAplugins)\$(TargetName)$(TargetExt)</OutputFile>
       <AdditionalDependencies>$(IDA_SDK)\lib\x86_win_vc_32\ida.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalOptions>/EXPORT:PLUGIN /SECTION:DLLSharedSection,rws  /SECTION:IDA_Mul-Debug,rws %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/EXPORT:PLUGIN /SECTION:DLLSharedSection,rws  /SECTION:Debug-Module,rws %(AdditionalOptions)</AdditionalOptions>
       <SuppressStartupBanner>false</SuppressStartupBanner>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
@@ -100,14 +100,13 @@
     <ClCompile Include="IDA_Demo_Main.cpp" />
     <ClCompile Include="OP_Export.cpp" />
     <ClCompile Include="OP_Import.cpp" />
-    <ClCompile Include="IDA_Mul-Debug.cpp" />
+    <ClCompile Include="OP_Debug.cpp" />
     <ClCompile Include="IDA_Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Debug.h" />
     <ClInclude Include="IDA_Demo_Main.h" />
     <ClInclude Include="IDA_Header.h" />
-    <ClInclude Include="IDA_Mul-Debug.h" />
     <ClInclude Include="IDA_Timer.H" />
     <ClInclude Include="List.h" />
     <ClInclude Include="Util_LIB\Char\UtilChar.h" />
