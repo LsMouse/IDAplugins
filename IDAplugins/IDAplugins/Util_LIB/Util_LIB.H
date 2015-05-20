@@ -15,6 +15,7 @@
 #include <name.hpp>
 #include <IDAClass/IDA_SDK.H>
 /*包含子类头文件*/
+#include <Debug/Util_LIB_Debug.H> 
 #include <Char/Util_LIB_Char.H>
 #include <File/Util_LIB_File.H>
 #include <List/Util_LIB_List.H>

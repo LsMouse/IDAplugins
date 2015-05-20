@@ -92,7 +92,7 @@ void FileUpdate(){
 *	1、MODE_Dump -> 普通DUMP
 *	2、MODE_FileUpdate -> 文件更新
 */
-int IDA_Export_Run(){
+int Export_Module(){
 	int mode = 0;
 	if (AskUsingForm_c(ASK_EXPORT_UI, &mode) == 0)return -1;
 	switch (mode){

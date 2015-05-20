@@ -29,10 +29,12 @@ plugin_t PLUGIN = {
 	IDAP_hotkey				// Hot key to run the plug-in  
 };
 /**/
-extern int IDA_Export_Run();
-extern int	Arm_Options();
+extern int Export_Module();
+extern int Import_Module();
+extern int Arm_Moudle();
 
-extern void Import_Run();
+//
+
 
 extern void IDA_CODE_Run();
 extern void Mul_Debug_Run();

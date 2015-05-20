@@ -7,23 +7,25 @@ const char ASK_Import_UI[] = "STARTITEM  0\n"
 				"<IDA SIZE:N:32:16::>\n"
 				"<FILE START:N:32:16::>\n";
 
-void Import_Run(){
+int Import_Module(){
 	char* m_filepath = askfile_c(0, "*.*", "需要导入的文件");
-	if (m_filepath == NULL)return;
+	if (m_filepath == NULL)return -1;
 	FILE* mFile = fopen(m_filepath, "rb");
-	fseek(mFile, 0, SEEK_END); //定位到文件末 
+//定位到文件末,获取文件长度
+	fseek(mFile, 0, SEEK_END);
 	ulong fileSzie = qftell(mFile);
-	fseek(mFile, 0, SEEK_SET); //定位到文件初
+//定位到文件初
+	fseek(mFile, 0, SEEK_SET);
 //
 	ulong Mem_Start = get_screen_ea();
 	ulong Mem_End = get_screen_ea() + fileSzie;
 	ulong Mem_Size = fileSzie;
 	ulong File_Start = 0;
-	if (AskUsingForm_c(ASK_Import_UI, &Mem_Start, &Mem_End, &Mem_Size,&File_Start) == 0)return;
+	if (AskUsingForm_c(ASK_Import_UI, &Mem_Start, &Mem_End, &Mem_Size,&File_Start) == 0)return 0;
 	if (Mem_Size == 0){
 		if (Mem_Start >= Mem_End){
 			msg("文件地址配置错误\n");
-			return;
+			return -1;
 		}
 		Mem_Size = Mem_End - Mem_Start;
 	}
@@ -39,4 +41,5 @@ void Import_Run(){
 		patch_byte(Mem_Start + m_i, ReadBuf[m_i]);
 		m_i++;
 	}
+	return 0;
 }

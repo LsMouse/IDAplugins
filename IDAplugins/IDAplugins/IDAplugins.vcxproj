@@ -96,23 +96,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="IDAOP_Arm.cpp" />
+    <ClCompile Include="OP_Arm.cpp" />
     <ClCompile Include="IDA_Demo_Main.cpp" />
-    <ClCompile Include="IDAOP_Export.cpp" />
-    <ClCompile Include="IDA_Import.cpp" />
+    <ClCompile Include="OP_Export.cpp" />
+    <ClCompile Include="OP_Import.cpp" />
     <ClCompile Include="IDA_Mul-Debug.cpp" />
     <ClCompile Include="IDA_Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Debug.h" />
     <ClInclude Include="IDA_Demo_Main.h" />
     <ClInclude Include="IDA_Header.h" />
     <ClInclude Include="IDA_Mul-Debug.h" />
     <ClInclude Include="IDA_Timer.H" />
     <ClInclude Include="List.h" />
-    <ClInclude Include="Option_ARMCode.H" />
     <ClInclude Include="Util_LIB\Char\UtilChar.h" />
     <ClInclude Include="Util_LIB\Char\Util_Base.h" />
     <ClInclude Include="Util_LIB\Char\Util_LIB_Char.H" />
+    <ClInclude Include="Util_LIB\Debug\Debug.h" />
+    <ClInclude Include="Util_LIB\Debug\Util_LIB_Debug.H" />
     <ClInclude Include="Util_LIB\File\Util_File.h" />
     <ClInclude Include="Util_LIB\File\Util_LIB_File.H" />
     <ClInclude Include="Util_LIB\IDAClass\AskUI.h" />

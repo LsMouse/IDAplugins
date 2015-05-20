@@ -99,8 +99,14 @@
     <ClInclude Include="Util_LIB\Linux\SysCall.H">
       <Filter>Util_LIB\Linux</Filter>
     </ClInclude>
-    <ClInclude Include="Option_ARMCode.H">
+    <ClInclude Include="Debug.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Util_LIB\Debug\Debug.h">
+      <Filter>Util_LIB\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Util_LIB\Debug\Util_LIB_Debug.H">
+      <Filter>Util_LIB\Debug</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -113,13 +119,13 @@
     <ClCompile Include="IDA_Mul-Debug.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="IDA_Import.cpp">
+    <ClCompile Include="OP_Export.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="IDAOP_Arm.cpp">
+    <ClCompile Include="OP_Import.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="IDAOP_Export.cpp">
+    <ClCompile Include="OP_Arm.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
