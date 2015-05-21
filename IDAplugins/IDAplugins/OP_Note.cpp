@@ -30,14 +30,19 @@ enum{
 	MODE_NOTE_PRINTF,
 };
 /*
+
 */
 void RunMode(int inMode){
 	ea_t _ea = get_screen_ea();
+	char* _AutoBuf = NULL;
 	switch (inMode){
 	case MODE_NOTE_UP:
-
-
-
+		if (OnSave.Seg.GetLength() == 0)return;
+		_AutoBuf = (char*)Util_Base::Alloc(1024);
+		OnSave.Update();
+		sprintf(_AutoBuf, 1024, "%s_Auto", SaveFile);
+		OnSave.Save(_AutoBuf);
+		free(_AutoBuf);
 	break;
 	case MODE_NOTE_ADD:
 		OnSave.AddSegment(getseg(_ea));
@@ -53,6 +58,7 @@ void RunMode(int inMode){
 
 	break;
 	}
+
 }
 /**
 * @See	WINAPI多线程
@@ -77,7 +83,7 @@ DWORD WINAPI Mul_Hander(LPVOID lpParam){
 int Note_Moudle(){
 	int _Config = MulThread;
 	if (WorkIng){
-		_MSG("之前操作为处理完毕，请稍后再试\n");
+		_MSG("之前操作未处理完毕，请稍后再试\n");
 		return 0;
 	}
 	if (AskUsingForm_c(ASK_NOTE_UI, &NoteMode,&_Config) == 0)return -1;
@@ -94,10 +100,15 @@ int Note_Moudle(){
 		if (NoteMode == MODE_NOTE_SAVE){
 			SaveFile = askfile_c(1, "*.ini", "保存注释文件");
 			if (SaveFile == NULL)return 0;
-		}
-		else if (NoteMode == MODE_NOTE_FILE){
+		}else if (NoteMode == MODE_NOTE_FILE){
 			LoadFile = askfile_c(0, "*.ini", "导入注释文件");
 			if (LoadFile == NULL)return 0;
+		}
+		else if (NoteMode == MODE_NOTE_UP){
+			if (SaveFile == NULL){
+				SaveFile = askfile_c(1, "*.ini", "保存注释文件");
+				if (SaveFile == NULL)return 0;
+			}
 		}
 		HandlerNo = CreateThread(NULL, 0, Mul_Hander, NULL, 0, NULL);
 	}

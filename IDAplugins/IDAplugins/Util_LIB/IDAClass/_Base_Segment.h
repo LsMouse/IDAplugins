@@ -7,11 +7,28 @@ public:
 	List<_Base_Bpt> Bpt;
 	segment_t* m_Seg;
 /**
+* @See		在系统中更新最新段
+*/	
+	void Update(){
+		int m_i = 0;
+		while (getnseg(m_i) != NULL){
+			ulong _Code = Util_Char::ReadCheck(getnseg(m_i)->startEA);
+			if (_Code == CheckCode){
+				Update(getnseg(m_i));
+				return;
+			}
+			m_i++;
+		}
+		Debug::MSG("_Base_Segment@ Update() No Find \n");
+	}
+/**
 * @See		更新当前inSeg
 * @Param　	inSeg -> IDA段类
 */
 	void Update(segment_t* inSeg){
 		if (inSeg == NULL)return;
+		Func.Clear();
+		Cmt.Clear();
 		//获取校验码
 		m_Seg = inSeg;
 		CheckCode = Util_Char::ReadCheck(inSeg->startEA);
