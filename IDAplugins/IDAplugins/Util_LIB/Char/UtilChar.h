@@ -61,4 +61,19 @@ public:
 		fseek(in_fd, -1, SEEK_CUR);
 		return c;
 	}
+/**
+* @See		读取每个Seg特殊计算标志(前0x100的和)
+* @Param	inStart -> 其实地址
+* @Return	OutMark -> 返回检验数据
+*/
+	static ulong ReadCheck(ea_t inStart) {
+		ulong OutMark = 0;
+		ulong m_i = 0;
+		while (m_i < 0x100){
+			OutMark += get_full_byte(inStart + m_i);
+			m_i++;
+		}
+		return OutMark;
+	}
+
 };

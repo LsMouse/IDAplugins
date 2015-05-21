@@ -1,12 +1,14 @@
 #include "Util_LIB.H"
-
 class _Base_Func{
 public:
 	ea_t StartEA;
 	char* Name;
 	char* Cmt;
 	char* ReCmt;
-/*
+/**
+* @See		获取IDA 函数名称
+* @Param　	inFun -> IDA函数类
+* @Return　	Out_Sec -> 函数名称
 */
 	static char* GetFuncName(func_t* inFun){
 		char* Out = NULL;
@@ -19,18 +21,17 @@ public:
 	}
 /**
 * @See		将数据转化成INI节模式
-* @Param　	inName -> 节名字
-* @Return　	Out_Sec -> INI数据
+* @Param　	inIni -> INI类
+* @Return　	inSecName -> 节名
 */
-	C_INI_Section* ToIniSection(char* inName){
-		C_INI_Section* Out_Sec = new C_INI_Section(inName);
-		Out_Sec->AddInt("StartEA", StartEA);
-		Out_Sec->AddString("Name", Name);
+	void ToIni(INI* inIni, char* inSecName){
+		inIni->addIntValue(inSecName, "StartEA", StartEA);
+		if (Name != NULL)
+			inIni->addStrValue(inSecName, "Name", Name);
 		if (Cmt != NULL)
-			Out_Sec->AddString("Cmt", Cmt);
+			inIni->addStrValue(inSecName, "Cmt", Cmt);
 		if (ReCmt != NULL)
-			Out_Sec->AddString("ReCmt", ReCmt);
-		return Out_Sec;
+			inIni->addStrValue(inSecName, "ReCmt", ReCmt);
 	}
 /**
 * @See		初始化_Base_Func
@@ -50,11 +51,14 @@ public:
 	}
 /**
 * @See		初始化_Base_Func
-* @Param　	
-* @Param　	
+* @Param　	inSection -> INI文件 段
 */
 	_Base_Func(C_INI_Section* inSection){
 		if (inSection == NULL)return;
+		StartEA = inSection->GetInt("StartEA");
+		Name = inSection->GetString("Name");
+		Cmt = inSection->GetString("Cmt");
+		ReCmt = inSection->GetString("ReCmt");
 	}
 };
 

@@ -55,7 +55,7 @@ void _stdcall IDAP_run(int arg) {// The "meat" of your plug-in
 		Debug_Moude();
 	break;
 	case MAIN_Notes:
-
+		Note_Moudle();
 	break;
 
 /*	case MAIN_BackSegment:Debug_Run(_MSG("IDA_Debug_ALL Run MAIN_BackSegment\n"));

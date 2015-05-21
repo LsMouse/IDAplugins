@@ -33,5 +33,6 @@ extern int Export_Module();
 extern int Import_Module();
 extern int Arm_Moudle();
 extern int Debug_Moude();
+extern int Note_Moudle();
 /**/
 #endif

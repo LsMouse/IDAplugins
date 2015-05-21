@@ -331,5 +331,8 @@ public:
 		FileBuf = Util_File::Read(in_path, "rb+");
 		load();
 	}
+	INI(){
+		Section = new List<C_INI_Section>;
+	}
 };
 

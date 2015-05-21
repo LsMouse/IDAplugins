@@ -87,9 +87,6 @@
     <ClInclude Include="Util_LIB\Linux\SysCall.H">
       <Filter>Util_LIB\Linux</Filter>
     </ClInclude>
-    <ClInclude Include="Debug.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Util_LIB\Debug\Debug.h">
       <Filter>Util_LIB\Debug</Filter>
     </ClInclude>
@@ -98,18 +95,6 @@
     </ClInclude>
     <ClInclude Include="Util_LIB\INI\INI.h">
       <Filter>Util_LIB\INI</Filter>
-    </ClInclude>
-    <ClInclude Include="_Base_Func.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="_Base_Cmt.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="_Base_Segment.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="_Base_Bpt.h">
-      <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Util_LIB\IDAClass\_Base_Bpt.h">
       <Filter>Util_LIB\IDACLASS</Filter>
@@ -121,6 +106,9 @@
       <Filter>Util_LIB\IDACLASS</Filter>
     </ClInclude>
     <ClInclude Include="Util_LIB\IDAClass\_Base_Segment.h">
+      <Filter>Util_LIB\IDACLASS</Filter>
+    </ClInclude>
+    <ClInclude Include="Util_LIB\IDAClass\Online_Save.h">
       <Filter>Util_LIB\IDACLASS</Filter>
     </ClInclude>
   </ItemGroup>

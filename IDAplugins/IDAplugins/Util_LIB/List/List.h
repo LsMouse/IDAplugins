@@ -72,6 +72,7 @@ template <class Type>
 class List :public _List_Base<Type>{
 public:
 	LP_Node _LinkThis = NULL;
+	ulong _NoThis = 0;
 /**
 * @See		添加数据，添加到列表尾部
 * @Param	类型数据
@@ -115,6 +116,7 @@ public:
 */
 	void Reset(){
 		_LinkThis = First;
+		_NoThis = 0;
 	}
 /**
 * @See		获取This指向的数据
@@ -125,11 +127,19 @@ public:
 		return _LinkThis->info;
 	}
 /**
+* @See		获取This的位置
+* @Return	This数据域
+*/
+	ulong GetPlace(){
+		return _NoThis;
+	}
+/**
 * @See		获取This指针指向下一个数据
 */
 	void Next(){
 		if (_LinkThis == NULL)return ;
 		_LinkThis = _LinkThis->_N_next;
+		_NoThis++;
 	}
 /**
 * @See		初始化列表
