@@ -27,8 +27,10 @@ public:
 */
 	void Update(segment_t* inSeg){
 		if (inSeg == NULL)return;
+		//清除数据
 		Func.Clear();
 		Cmt.Clear();
+		Bpt.Clear();
 		//获取校验码
 		m_Seg = inSeg;
 		CheckCode = Util_Char::ReadCheck(inSeg->startEA);
@@ -48,6 +50,7 @@ public:
 			_ThisEA++;
 		}
 		//查找断点
+
 	}
 /**
 * @See		将数据转化成INI节模式
@@ -79,11 +82,34 @@ public:
 		free(_SecName);
 	}
 /**
+* @See		从INI文件中
+* @Param　	inName -> 节名字
+* @Return　	Out_Sec -> INI数据
+*/
+	void LoadIni(INI* inIni, int inPlace){
+		char* _SecName = (char*)Util_Base::Alloc(1024);
+		sprintf(_SecName, 1024, "Seg.%d", inPlace);
+		int _FuncLen = inIni->GetIntValue(_SecName,"FuncLength");
+		int _CmtcLen = inIni->GetIntValue(_SecName, "CmtLength");
+		int m_i = 0;
+		while (m_i < _FuncLen){
+
+
+
+
+		}
+
+
+	}
+/**
 * @See		初始化_Base_Segment
 * @Param　	inSeg -> IDA段类
 */
 	_Base_Segment(segment_t* inSeg){
 		Update(inSeg);
+	}
+	_Base_Segment(INI* inIni, int inPlace){
+		LoadIni(inIni, inPlace);
 	}
 };
 

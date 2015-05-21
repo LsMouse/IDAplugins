@@ -56,6 +56,26 @@ public:
 /**
 * @See		初始化Online_Save
 */
+	void Online_Load(char* inPath){
+		INI* _ini = new INI(inPath);
+		char* SecName = (char*)Util_Base::Alloc(1024);
+		int SegLength = _ini->GetIntValue("CONFIG", "SegLength");
+		int m_i = 0;
+		while (m_i < SegLength){
+			_Base_Segment* _BSeg = new _Base_Segment(_ini, m_i);
+
+
+			m_i++;
+		}
+
+
+
+
+	}
+
+/**
+* @See		初始化Online_Save
+*/
 	Online_Save(){
 
 	}
