@@ -101,13 +101,11 @@
     <ClCompile Include="OP_Export.cpp" />
     <ClCompile Include="OP_Import.cpp" />
     <ClCompile Include="OP_Debug.cpp" />
-    <ClCompile Include="IDA_Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Debug.h" />
     <ClInclude Include="IDA_Demo_Main.h" />
     <ClInclude Include="IDA_Header.h" />
-    <ClInclude Include="IDA_Timer.H" />
     <ClInclude Include="List.h" />
     <ClInclude Include="Util_LIB\Char\UtilChar.h" />
     <ClInclude Include="Util_LIB\Char\Util_Base.h" />

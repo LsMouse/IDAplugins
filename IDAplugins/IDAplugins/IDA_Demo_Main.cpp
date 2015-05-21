@@ -1,7 +1,6 @@
 ﻿#define __IDA_DEMO_MAIN_C_
 #include"IDA_Header.H"
 #include"IDA_Demo_Main.h"
-#include"IDA_Timer.H"
 //主面板模式选择，定在全局变量是为能自动保存模式
 int Main_Mode = 0;
 int _stdcall IDAP_init(void) {
@@ -38,10 +37,10 @@ enum{
 *	5、MAIN_Note   -> 注释模块
 */
 void _stdcall IDAP_run(int arg) {// The "meat" of your plug-in    
-	ushort EnDebug = 0;
+	ushort EnDebug = Debug::GetEnable();
 	if (AskUsingForm_c(ASK_MAIN_UI, &Main_Mode, &EnDebug) == 0)return;
-	_MSG("EnDebug:%d\n", EnDebug);
 	Debug::SetEnable(EnDebug);
+	Debug::MSG("EnDebug:%d\n", EnDebug);
 	switch (Main_Mode){
 	case MAIN_Export:
 		Export_Module();
@@ -55,6 +54,7 @@ void _stdcall IDAP_run(int arg) {// The "meat" of your plug-in
 	case MAIN_Debug:
 		Debug_Moude();
 	break;
+
 /*	case MAIN_BackSegment:Debug_Run(_MSG("IDA_Debug_ALL Run MAIN_BackSegment\n"));
 		mMode = 0;/**/
 /*

@@ -45,9 +45,6 @@
     <ClInclude Include="IDA_Header.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="IDA_Timer.H">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Util_LIB\Util_LIB.H">
       <Filter>Util_LIB</Filter>
     </ClInclude>
@@ -108,9 +105,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IDA_Demo_Main.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="IDA_Timer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="OP_Export.cpp">
