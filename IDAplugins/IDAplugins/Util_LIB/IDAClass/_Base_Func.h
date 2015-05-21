@@ -34,6 +34,8 @@ public:
 	}
 /**
 * @See		初始化_Base_Func
+* @Param　	inSeg -> IDA 锻类
+* @Param　	inFun -> IDA 函数类
 */
 	_Base_Func(segment_t* inSeg,func_t* inFun){
 		StartEA = 0;
@@ -45,6 +47,14 @@ public:
 		Name = GetFuncName(inFun);
 		Cmt = _Base_Cmt::GetCmt(inFun->startEA,0);
 		ReCmt = _Base_Cmt::GetCmt(inFun->startEA, 0);
+	}
+/**
+* @See		初始化_Base_Func
+* @Param　	
+* @Param　	
+*/
+	_Base_Func(C_INI_Section* inSection){
+		if (inSection == NULL)return;
 	}
 };
 

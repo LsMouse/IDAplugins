@@ -1,0 +1,5 @@
+1、采用VS2013编译器。
+2、IDA SDK版本为6.5
+3、设置系统环境变量
+	IDA_SDK -> IDA的SDK目录(比如我的D:\Reser\IDA\IDA 6.5\idasdk65\)
+	IDAplugins -> IDA的插件目录(比如我的D:\Reser\IDA\IDA 6.5\plugins)
