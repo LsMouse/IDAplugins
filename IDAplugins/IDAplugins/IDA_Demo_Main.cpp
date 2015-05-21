@@ -19,7 +19,7 @@ const char ASK_MAIN_UI[] = "STARTITEM  0\n\n"
 	"<#数据导入# ~I~mport:R:32:16:>\n"
 	"<#ARM相关功能# ~A~RM:R:32:16:>\n"
 	"<#调试# ~D~ebug:R:32:16:>\n"
-	"<#段数据备份# ~N~ote:R:32:16:>>\n"
+	"<#注释# ~N~ote:R:32:16:>>\n"
 	"<##调试选择##是否打印信息:C>>\n";
 enum{
 	MAIN_Export,
@@ -53,6 +53,9 @@ void _stdcall IDAP_run(int arg) {// The "meat" of your plug-in
 	break;
 	case MAIN_Debug:
 		Debug_Moude();
+	break;
+	case MAIN_Notes:
+
 	break;
 
 /*	case MAIN_BackSegment:Debug_Run(_MSG("IDA_Debug_ALL Run MAIN_BackSegment\n"));

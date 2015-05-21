@@ -75,12 +75,6 @@
     <ClInclude Include="Util_LIB\File\Util_LIB_File.H">
       <Filter>Util_LIB\File</Filter>
     </ClInclude>
-    <ClInclude Include="Util_LIB\INI\C_INI.h">
-      <Filter>Util_LIB\INI</Filter>
-    </ClInclude>
-    <ClInclude Include="List.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Util_LIB\List\List.h">
       <Filter>Util_LIB\List</Filter>
     </ClInclude>
@@ -102,6 +96,33 @@
     <ClInclude Include="Util_LIB\Debug\Util_LIB_Debug.H">
       <Filter>Util_LIB\Debug</Filter>
     </ClInclude>
+    <ClInclude Include="Util_LIB\INI\INI.h">
+      <Filter>Util_LIB\INI</Filter>
+    </ClInclude>
+    <ClInclude Include="_Base_Func.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="_Base_Cmt.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="_Base_Segment.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="_Base_Bpt.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Util_LIB\IDAClass\_Base_Bpt.h">
+      <Filter>Util_LIB\IDACLASS</Filter>
+    </ClInclude>
+    <ClInclude Include="Util_LIB\IDAClass\_Base_Cmt.h">
+      <Filter>Util_LIB\IDACLASS</Filter>
+    </ClInclude>
+    <ClInclude Include="Util_LIB\IDAClass\_Base_Func.h">
+      <Filter>Util_LIB\IDACLASS</Filter>
+    </ClInclude>
+    <ClInclude Include="Util_LIB\IDAClass\_Base_Segment.h">
+      <Filter>Util_LIB\IDACLASS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IDA_Demo_Main.cpp">
@@ -117,6 +138,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="OP_Debug.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="OP_Note.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

@@ -42,8 +42,7 @@ public:
 * @Param	sMatchStr -> ÐèÒªÌæ»»×Ö·û
 * @Param	sReplaceStr -> Ìæ»»×Ö·û
 */
-	static void ReplaceChar(char *sSrc, char sMatchStr, char sReplaceStr)
-	{
+	static void ReplaceChar(char *sSrc, char sMatchStr, char sReplaceStr){
 		int  StringLen = strlen(sSrc);
 		while (StringLen){
 			if (*(sSrc + StringLen) == sMatchStr){

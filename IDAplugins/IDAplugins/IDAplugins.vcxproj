@@ -101,12 +101,12 @@
     <ClCompile Include="OP_Export.cpp" />
     <ClCompile Include="OP_Import.cpp" />
     <ClCompile Include="OP_Debug.cpp" />
+    <ClCompile Include="OP_Note.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Debug.h" />
     <ClInclude Include="IDA_Demo_Main.h" />
     <ClInclude Include="IDA_Header.h" />
-    <ClInclude Include="List.h" />
     <ClInclude Include="Util_LIB\Char\UtilChar.h" />
     <ClInclude Include="Util_LIB\Char\Util_Base.h" />
     <ClInclude Include="Util_LIB\Char\Util_LIB_Char.H" />
@@ -116,7 +116,11 @@
     <ClInclude Include="Util_LIB\File\Util_LIB_File.H" />
     <ClInclude Include="Util_LIB\IDAClass\AskUI.h" />
     <ClInclude Include="Util_LIB\IDAClass\Util_LIB_IDAClass.H" />
-    <ClInclude Include="Util_LIB\INI\C_INI.h" />
+    <ClInclude Include="Util_LIB\IDAClass\_Base_Bpt.h" />
+    <ClInclude Include="Util_LIB\IDAClass\_Base_Cmt.h" />
+    <ClInclude Include="Util_LIB\IDAClass\_Base_Func.h" />
+    <ClInclude Include="Util_LIB\IDAClass\_Base_Segment.h" />
+    <ClInclude Include="Util_LIB\INI\INI.h" />
     <ClInclude Include="Util_LIB\INI\Util_LIB_INI.H" />
     <ClInclude Include="Util_LIB\Linux\SysCall.H" />
     <ClInclude Include="Util_LIB\Linux\Util_LIB_Linux.H" />
@@ -124,6 +128,10 @@
     <ClInclude Include="Util_LIB\List\List.h" />
     <ClInclude Include="Util_LIB\List\Util_LIB_List.H" />
     <ClInclude Include="Util_LIB\Util_LIB.H" />
+    <ClInclude Include="_Base_Bpt.h" />
+    <ClInclude Include="_Base_Cmt.h" />
+    <ClInclude Include="_Base_Func.h" />
+    <ClInclude Include="_Base_Segment.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
