@@ -4,5 +4,7 @@ public:
 	int Flags;
 	ea_t StartEA;
 
+
+
 };
 

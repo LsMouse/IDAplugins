@@ -233,7 +233,6 @@ public:
 				memcpy(p_SecName, &FileBuf[mStart_Section], mLen_Section);
 				p_SecName = trim(p_SecName);
 				addSection(p_SecName);
-				//	_MSG("FindSec:%s\n", p_SecName);
 				//跳过空格字符
 				while (isSpace(FileBuf, ++po_Find));
 				//判断是否为新的段开始， 不是开始查找Key和Value
@@ -284,7 +283,7 @@ public:
 						Util_Char::ReplaceChar(p_Value, 0x0D, 0x01);
 						Util_Char::ReplaceChar(p_Value, 0x0A, 0x02);
 						//添加到列表，
-						Debug::MSG("FindKey:%s,%s\n", p_Key, p_Value);
+					//	Debug::MSG("FindKey:%s,%s\n", p_Key, p_Value);
 						addStrValue(p_SecName, p_Key, p_Value);
 						while (isSpace(FileBuf, po_Find)){
 							po_Find++;

@@ -24,7 +24,7 @@ public:
 * @Param　	inIni -> INI类
 * @Return　	inSecName -> 节名
 */
-	void ToIni(INI* inIni, char* inSecName){
+	void To_Ini(INI* inIni, char* inSecName){
 		inIni->addIntValue(inSecName, "StartEA", StartEA);
 		if (Name != NULL)
 			inIni->addStrValue(inSecName, "Name", Name);
@@ -32,6 +32,22 @@ public:
 			inIni->addStrValue(inSecName, "Cmt", Cmt);
 		if (ReCmt != NULL)
 			inIni->addStrValue(inSecName, "ReCmt", ReCmt);
+	}
+/**
+* @See		将数据加载到IDA内存中
+* @Param　	inStartEA -> 段其实地址
+*/
+	void To_IDAMem(ea_t inStartEA){
+		ua_code(inStartEA + StartEA);
+		add_func(inStartEA + StartEA, BADADDR);
+		if (Cmt != NULL)
+			set_cmt(inStartEA + StartEA, Cmt, 0);
+		if (ReCmt != NULL)
+			set_cmt(inStartEA + StartEA, ReCmt, 1);
+		if (memcmp(Name, "sub_", 4) == 0)return;
+		if (memcmp(Name, "loc_", 4) == 0)return;
+		if (memcmp(Name, "_", 1) == 0)return;
+		set_name(inStartEA + StartEA, Name, 1);
 	}
 /**
 * @See		初始化_Base_Func
@@ -59,6 +75,18 @@ public:
 		Name = inSection->GetString("Name");
 		Cmt = inSection->GetString("Cmt");
 		ReCmt = inSection->GetString("ReCmt");
+	}
+/**
+* @See		初始化_Base_Func
+* @Param　	inIni -> INI类
+* @Param　	inSecName -> 段名
+*/
+	_Base_Func(INI* inIni, char* inSecName){
+		if (inIni == NULL)return;
+		StartEA = inIni->GetIntValue(inSecName, "StartEA");
+		Name = inIni->GetStrValue(inSecName, "Name");
+		Cmt = inIni->GetStrValue(inSecName, "Cmt");
+		ReCmt = inIni->GetStrValue(inSecName, "ReCmt");
 	}
 };
 

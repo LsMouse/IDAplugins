@@ -7,25 +7,58 @@ public:
 	List<_Base_Bpt> Bpt;
 	segment_t* m_Seg;
 /**
-* @See		在系统中更新最新段
-*/	
-	void Update(){
+* @See		查找当前IDA匹配的Segment段
+* @Return　	匹配的segment_t类
+*/
+	segment_t* FindSegment(){
 		int m_i = 0;
 		while (getnseg(m_i) != NULL){
 			ulong _Code = Util_Char::ReadCheck(getnseg(m_i)->startEA);
+			Debug::MSG("FindSegment@ _Code():0x%08x,CheckCode:0x%08x\n",_Code,CheckCode);
 			if (_Code == CheckCode){
-				Update(getnseg(m_i));
-				return;
+				return getnseg(m_i);
 			}
 			m_i++;
 		}
-		Debug::MSG("_Base_Segment@ Update() No Find \n");
+		return NULL;
+	}
+/**
+* @See		在系统中更新最新段
+*/	
+	void UpSegment(){
+		segment_t* _Seg = FindSegment();
+		if (_Seg == NULL){
+			Debug::MSG("_Base_Segment@ UpSegment() No Find \n");
+			return;
+		}
+		AddSegment(_Seg);
+	}
+/**
+* @See	更新全部列表
+*	在当前IDA中，更新已添加的段
+*/
+	void To_IDAMem(){
+		segment_t* _Seg = FindSegment();
+		if (_Seg == NULL){
+			Debug::MSG("_Base_Segment@ To_IDAMem() No Find \n");
+			return;
+		}
+		Func.Reset();
+		while (Func.Get() != NULL){
+			Func.Get()->To_IDAMem(_Seg->startEA);
+			Func.Next();
+		}
+		Cmt.Reset();
+		while (Cmt.Get() != NULL){
+			Cmt.Get()->To_IDAMem(_Seg->startEA);
+			Cmt.Next();
+		}
 	}
 /**
 * @See		更新当前inSeg
 * @Param　	inSeg -> IDA段类
 */
-	void Update(segment_t* inSeg){
+	void AddSegment(segment_t* inSeg){
 		if (inSeg == NULL)return;
 		//清除数据
 		Func.Clear();
@@ -52,12 +85,13 @@ public:
 		//查找断点
 
 	}
+
 /**
 * @See		将数据转化成INI节模式
 * @Param　	inName -> 节名字
 * @Return　	Out_Sec -> INI数据
 */
-	void ToIni(INI* inIni,int inPlace){
+	void To_Ini(INI* inIni,int inPlace){
 		char* _SecName= (char*)Util_Base::Alloc(1024);
 		sprintf(_SecName, 1024, "Seg.%d", inPlace);
 		inIni->addIntValue(_SecName, "CheckCode", CheckCode);
@@ -68,7 +102,7 @@ public:
 		while (Cmt.Get() != NULL){
 			memset(_SecName,0,1024);
 			sprintf(_SecName, 1024, "Seg.%d.Cmt.%d", inPlace, Cmt.GetPlace());
-			Cmt.Get()->ToIni(inIni, _SecName);
+			Cmt.Get()->To_Ini(inIni, _SecName);
 			Cmt.Next();
 		}
 		//保存函数
@@ -76,7 +110,7 @@ public:
 		while (Func.Get() != NULL){
 			memset(_SecName, 0, 1024);
 			sprintf(_SecName, 1024, "Seg.%d.Func.%d", inPlace, Func.GetPlace());
-			Func.Get()->ToIni(inIni, _SecName);
+			Func.Get()->To_Ini(inIni, _SecName);
 			Func.Next();
 		}
 		free(_SecName);
@@ -88,26 +122,39 @@ public:
 */
 	void LoadIni(INI* inIni, int inPlace){
 		char* _SecName = (char*)Util_Base::Alloc(1024);
+		char* _SonSecName = (char*)Util_Base::Alloc(1024);
 		sprintf(_SecName, 1024, "Seg.%d", inPlace);
+		CheckCode = inIni->GetIntValue(_SecName, "CheckCode");
 		int _FuncLen = inIni->GetIntValue(_SecName,"FuncLength");
-		int _CmtcLen = inIni->GetIntValue(_SecName, "CmtLength");
+		int _CmtcLen = inIni->GetIntValue(_SecName, "CmtLength");	
+		//
 		int m_i = 0;
 		while (m_i < _FuncLen){
-
-
-
-
+			memset(_SonSecName,0,1024);
+			sprintf(_SonSecName, 1024, "Seg.%d.Func.%d", inPlace, m_i);
+			_Base_Func* _Func = new _Base_Func(inIni,_SonSecName);
+			Func.Inster(_Func);
+			m_i++;
 		}
-
-
+		//
+		m_i = 0;
+		while (m_i < _CmtcLen){
+			memset(_SonSecName, 0, 1024);
+			sprintf(_SonSecName, 1024, "Seg.%d.Cmt.%d", inPlace, m_i);
+			_Base_Cmt* _Cmt = new _Base_Cmt(inIni, _SonSecName);
+			Cmt.Inster(_Cmt);
+			m_i++;
+		}
+		//
 	}
 /**
 * @See		初始化_Base_Segment
 * @Param　	inSeg -> IDA段类
 */
 	_Base_Segment(segment_t* inSeg){
-		Update(inSeg);
+		AddSegment(inSeg);
 	}
+/**/
 	_Base_Segment(INI* inIni, int inPlace){
 		LoadIni(inIni, inPlace);
 	}

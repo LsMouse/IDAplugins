@@ -39,7 +39,7 @@ void RunMode(int inMode){
 	case MODE_NOTE_UP:
 		if (OnSave.Seg.GetLength() == 0)return;
 		_AutoBuf = (char*)Util_Base::Alloc(1024);
-		OnSave.Update();
+		OnSave.UpAllSegment();
 		sprintf(_AutoBuf, 1024, "%s_Auto", SaveFile);
 		OnSave.Save(_AutoBuf);
 		free(_AutoBuf);
@@ -48,7 +48,8 @@ void RunMode(int inMode){
 		OnSave.AddSegment(getseg(_ea));
 	break;
 	case MODE_NOTE_FILE:
-		
+		if (LoadFile == NULL)return;
+		OnSave.Online_Load(LoadFile);
 	break;
 	case MODE_NOTE_SAVE:
 		OnSave.Save(SaveFile);
@@ -95,8 +96,6 @@ int Note_Moudle(){
 	}
 	else{
 		Debug::MSG("启用多线程\n");
-		MulThread = TRUE;
-		WorkIng = TRUE;
 		if (NoteMode == MODE_NOTE_SAVE){
 			SaveFile = askfile_c(1, "*.ini", "保存注释文件");
 			if (SaveFile == NULL)return 0;
@@ -110,6 +109,8 @@ int Note_Moudle(){
 				if (SaveFile == NULL)return 0;
 			}
 		}
+		MulThread = TRUE;
+		WorkIng = TRUE;
 		HandlerNo = CreateThread(NULL, 0, Mul_Hander, NULL, 0, NULL);
 	}
 	return 0;
