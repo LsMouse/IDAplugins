@@ -7,11 +7,18 @@ public:
 *	在当前IDA中，更新已添加的段
 */
 	void UpAllSegment(){
-		Seg.Reset();
-		while (Seg.Get() != NULL){
-			//查找并更新段
-			Seg.Get()->UpSegment();
-			Seg.Next();
+		int m_i = 0;
+		segment_t* _Seg = getnseg(m_i);
+		while (_Seg != NULL){
+			ulong _Code = Util_Char::ReadCheck(_Seg->startEA);
+			Seg.Reset();
+			while (Seg.Get() != NULL){
+				if (_Code == Seg.Get()->CheckCode){
+					Seg.Get()->AddSegment(_Seg);
+				}
+				Seg.Next();
+			}
+			m_i++;
 		}
 	}
 /**
