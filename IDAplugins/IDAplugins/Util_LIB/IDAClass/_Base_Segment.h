@@ -2,10 +2,10 @@
 class _Base_Segment{
 public:
 	ulong CheckCode;
+	ulong Size;
 	List<_Base_Func> Func;
 	List<_Base_Cmt> Cmt;
 	List<_Base_Bpt> Bpt;
-	segment_t* m_Seg;
 /**
 * @See		查找当前IDA匹配的Segment段
 * @Return　	匹配的segment_t类
@@ -13,11 +13,13 @@ public:
 	segment_t* FindSegment(){
 		int m_i = 0;
 		while (getnseg(m_i) != NULL){
-			ulong _Code = Util_Char::ReadCheck(getnseg(m_i)->startEA);
-			Debug::MSG("FindSegment@ _Code()Start:0x%08x\n", getnseg(m_i)->startEA);
-			Debug::MSG("FindSegment@ _Code():0x%08x,CheckCode:0x%08x\n",_Code,CheckCode);
-			if (_Code == CheckCode){
-				return getnseg(m_i);
+			if (Size == (getnseg(m_i)->endEA - getnseg(m_i)->startEA)){
+				ulong _Code = Util_Char::ReadCheck(getnseg(m_i)->startEA);
+				if (_Code == CheckCode){
+					Debug::MSG("FindSegment@ _Code()Start:0x%08x\n", getnseg(m_i)->startEA);
+					Debug::MSG("FindSegment@ _Code():0x%08x,CheckCode:0x%08x\n", _Code, CheckCode);
+					return getnseg(m_i);
+				}
 			}
 			m_i++;
 		}
@@ -27,39 +29,39 @@ public:
 * @See		在系统中更新最新段
 */	
 	void UpSegment(){
-		segment_t* _Seg = FindSegment();
-		if (_Seg == NULL){
-			Debug::MSG("_Base_Segment@ UpSegment() No Find \n");
+		segment_t* m_Seg = FindSegment();
+		if (m_Seg == NULL){
+			Debug::MSG("_Base_Segment@ To_IDAMem() No Find \n");
 			return;
 		}
-		AddSegment(_Seg);
+		AddSegment(m_Seg);
 	}
 /**
 * @See	更新全部列表
 *	在当前IDA中，更新已添加的段
 */
 	void To_IDAMem(){
-		segment_t* _Seg = FindSegment();
-		if (_Seg == NULL){
+		segment_t* m_Seg = FindSegment();
+		if (m_Seg == NULL){
 			Debug::MSG("_Base_Segment@ To_IDAMem() No Find \n");
 			return;
 		}
 		//函数更新
 		Func.Reset();
 		while (Func.Get() != NULL){
-			Func.Get()->To_IDAMem(_Seg->startEA);
+			Func.Get()->To_IDAMem(m_Seg->startEA);
 			Func.Next();
 		}
 		//注释更新
 		Cmt.Reset();
 		while (Cmt.Get() != NULL){
-			Cmt.Get()->To_IDAMem(_Seg->startEA);
+			Cmt.Get()->To_IDAMem(m_Seg->startEA);
 			Cmt.Next();
 		}
 		//断点更新
 		Bpt.Reset();
 		while (Bpt.Get() != NULL){
-			Bpt.Get()->To_IDAMem(_Seg->startEA);
+			Bpt.Get()->To_IDAMem(m_Seg->startEA);
 			Bpt.Next();
 		}
 		Debug::MSG("_Base_Segment@ To_IDAMem() Over \n");
@@ -75,8 +77,8 @@ public:
 		Cmt.Clear();
 		Bpt.Clear();
 		//获取校验码
-		m_Seg = inSeg;
 		CheckCode = Util_Char::ReadCheck(inSeg->startEA);
+		Size = inSeg->endEA - inSeg->startEA;
 		//查找函数体
 		func_t* _func = get_func(inSeg->startEA);
 		if (_func == NULL)_func = get_next_func(inSeg->startEA);
@@ -111,6 +113,7 @@ public:
 		char* _SecName= (char*)Util_Base::Alloc(1024);
 		sprintf(_SecName, 1024, "Seg.%d", inPlace);
 		inIni->addIntValue(_SecName, "CheckCode", CheckCode);
+		inIni->addIntValue(_SecName, "Size", Size);
 		inIni->addIntValue(_SecName, "CmtLength", Cmt.GetLength());
 		inIni->addIntValue(_SecName, "FuncLength", Func.GetLength());
 		inIni->addIntValue(_SecName, "BptLength", Bpt.GetLength());
@@ -150,6 +153,7 @@ public:
 		char* _SonSecName = (char*)Util_Base::Alloc(1024);
 		sprintf(_SecName, 1024, "Seg.%d", inPlace);
 		CheckCode = inIni->GetIntValue(_SecName, "CheckCode");
+		Size = inIni->GetIntValue(_SecName, "Size");
 		int _FuncLen = inIni->GetIntValue(_SecName,"FuncLength");
 		int _CmtcLen = inIni->GetIntValue(_SecName, "CmtLength");	
 		int _BptLen = inIni->GetIntValue(_SecName, "BptLength");

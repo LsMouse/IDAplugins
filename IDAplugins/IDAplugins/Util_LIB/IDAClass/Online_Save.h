@@ -19,10 +19,12 @@ public:
 				Seg.Next();
 			}
 			m_i++;
+			_Seg = getnseg(m_i);
 		}
 	}
 /**
 * @See	将当前段信息全部更新到IDA中
+*	
 */
 	void To_IDAMem(){
 		Seg.Reset();
@@ -50,9 +52,7 @@ public:
 				//存在共同体,想将数据加载到IDAMem，
 				//若IDAMem不存在这段，就不在对Seg更改
 				Debug::MSG("AddSegment is Have,GetLength:%d\n", Seg.GetLength());
-				inBSeg->To_IDAMem();
-				if (inBSeg->FindSegment() != NULL)
-					Seg.Get()->AddSegment(inBSeg->FindSegment());
+				inBSeg->To_IDAMem();			
 				return;
 			}
 			Seg.Next();

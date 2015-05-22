@@ -49,7 +49,7 @@ void RunMode(int inMode){
 		OnSave.AddSegment(getseg(_ea));
 	break;
 	case MODE_NOTE_FILE:
-		if (!MulThread)	LoadFile = askfile_c(1, "*.ini", "导入注释文件");
+		if (!MulThread)	LoadFile = askfile_c(1, "*.ini*", "导入注释文件");
 		if (LoadFile == NULL)return;
 		OnSave.Online_Load(LoadFile);
 	break;
@@ -88,6 +88,7 @@ int Note_Moudle(){
 	int _Config = MulThread;
 	if (WorkIng){
 		_MSG("之前操作未处理完毕，请稍后再试\n");
+
 		return 0;
 	}
 	if (AskUsingForm_c(ASK_NOTE_UI, &NoteMode,&_Config) == 0)return -1;
@@ -95,6 +96,7 @@ int Note_Moudle(){
 	if (_Config == 0){
 		Debug::MSG("不启用多线程\n");
 		MulThread = FALSE;
+		WorkIng = FALSE;
 		RunMode(NoteMode);
 	}
 	else{
