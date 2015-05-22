@@ -81,6 +81,8 @@ const char* Con_SysCall[] = {
 	"__NR_sigaction",		//(__NR_SYSCALL_BASE + 67)
 	"__NR_NULL",			//(__NR_SYSCALL_BASE + 68)
 	"__NR_NULL",			//(__NR_SYSCALL_BASE + 69)
+
+
 	"__NR_setreuid",		//(__NR_SYSCALL_BASE + 70)
 	"__NR_setregid",		//(__NR_SYSCALL_BASE + 71)
 	"__NR_sigsuspend",		//(__NR_SYSCALL_BASE + 72)            

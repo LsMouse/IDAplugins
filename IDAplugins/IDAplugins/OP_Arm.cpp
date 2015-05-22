@@ -19,9 +19,10 @@ const char ASK_CODE_UI[] = "ARM CODE\n\n\n"
 			"<#Thumb# Mode 16Bit:R>\n"
 			"<#ARM# Mode 32Bit:R>>\n";
 //SysCallUI定义
-const char ASK_SYSCALL_UI[] = "ARM SysCal\n"
-			"输入系统调用的参数\n"
-			"<~S~ys Num(Hex):N:32:16::>\n";
+const char ASK_SYSCALL_UI[] = "STARTITEM  0\n"
+				"输入系统调用的参数\n"
+				"<~S~ys Num(Hex):N:32:16::>\n";
+
 /*
 *				模式说明
 *	1、MODE_ARMOP_Code -> 使用ARM指令修改CODE
@@ -40,10 +41,10 @@ int Arm_Moudle(){
 	case MODE_ARMOP_SysCall:
 		_MSG("Entry ARM SysCall!\n");
 		//自动获取
-		int Sys_No = get_32bit(get_screen_ea()) & 0xFFF;
+		ulong Sys_No = get_32bit(get_screen_ea()) & 0xFFF;
 		if (AskUsingForm_c(ASK_SYSCALL_UI, &Sys_No) == 0)return 0;
 		if (SysCall::getName(Sys_No) != NULL){
-			set_cmt(get_screen_ea(), SysCall::getName(Sys_No), 0);
+			set_cmt(get_screen_ea(), SysCall::getName(Sys_No), 1);
 		}
 	break;
 	}
