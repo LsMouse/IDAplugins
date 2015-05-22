@@ -14,6 +14,7 @@ public:
 		int m_i = 0;
 		while (getnseg(m_i) != NULL){
 			ulong _Code = Util_Char::ReadCheck(getnseg(m_i)->startEA);
+			Debug::MSG("FindSegment@ _Code()Start:0x%08x\n", getnseg(m_i)->startEA);
 			Debug::MSG("FindSegment@ _Code():0x%08x,CheckCode:0x%08x\n",_Code,CheckCode);
 			if (_Code == CheckCode){
 				return getnseg(m_i);
@@ -43,16 +44,25 @@ public:
 			Debug::MSG("_Base_Segment@ To_IDAMem() No Find \n");
 			return;
 		}
+		//函数更新
 		Func.Reset();
 		while (Func.Get() != NULL){
 			Func.Get()->To_IDAMem(_Seg->startEA);
 			Func.Next();
 		}
+		//注释更新
 		Cmt.Reset();
 		while (Cmt.Get() != NULL){
 			Cmt.Get()->To_IDAMem(_Seg->startEA);
 			Cmt.Next();
 		}
+		//断点更新
+		Bpt.Reset();
+		while (Bpt.Get() != NULL){
+			Bpt.Get()->To_IDAMem(_Seg->startEA);
+			Bpt.Next();
+		}
+		Debug::MSG("_Base_Segment@ To_IDAMem() Over \n");
 	}
 /**
 * @See		更新当前inSeg
@@ -83,9 +93,15 @@ public:
 			_ThisEA++;
 		}
 		//查找断点
-
+		_ThisEA = inSeg->startEA;
+		while (_ThisEA <= inSeg->endEA){
+			if (check_bpt(_ThisEA) != BPTCK_NONE){
+				Bpt.Inster(new _Base_Bpt(inSeg, _ThisEA));
+				_ThisEA += 1;
+			}
+			_ThisEA++;
+		}
 	}
-
 /**
 * @See		将数据转化成INI节模式
 * @Param　	inName -> 节名字
@@ -97,6 +113,7 @@ public:
 		inIni->addIntValue(_SecName, "CheckCode", CheckCode);
 		inIni->addIntValue(_SecName, "CmtLength", Cmt.GetLength());
 		inIni->addIntValue(_SecName, "FuncLength", Func.GetLength());
+		inIni->addIntValue(_SecName, "BptLength", Bpt.GetLength());
 		//保存注释
 		Cmt.Reset();
 		while (Cmt.Get() != NULL){
@@ -113,6 +130,14 @@ public:
 			Func.Get()->To_Ini(inIni, _SecName);
 			Func.Next();
 		}
+		//保存断点
+		Bpt.Reset();
+		while (Bpt.Get() != NULL){
+			memset(_SecName, 0, 1024);
+			sprintf(_SecName, 1024, "Seg.%d.Bpt.%d", inPlace, Bpt.GetPlace());
+			Bpt.Get()->To_Ini(inIni, _SecName);
+			Bpt.Next();
+		}
 		free(_SecName);
 	}
 /**
@@ -127,7 +152,8 @@ public:
 		CheckCode = inIni->GetIntValue(_SecName, "CheckCode");
 		int _FuncLen = inIni->GetIntValue(_SecName,"FuncLength");
 		int _CmtcLen = inIni->GetIntValue(_SecName, "CmtLength");	
-		//
+		int _BptLen = inIni->GetIntValue(_SecName, "BptLength");
+		//读取函数
 		int m_i = 0;
 		while (m_i < _FuncLen){
 			memset(_SonSecName,0,1024);
@@ -136,7 +162,7 @@ public:
 			Func.Inster(_Func);
 			m_i++;
 		}
-		//
+		//读取注释
 		m_i = 0;
 		while (m_i < _CmtcLen){
 			memset(_SonSecName, 0, 1024);
@@ -145,7 +171,17 @@ public:
 			Cmt.Inster(_Cmt);
 			m_i++;
 		}
-		//
+		//读取断点
+		m_i = 0;
+		while (m_i < _BptLen){
+			memset(_SonSecName, 0, 1024);
+			sprintf(_SonSecName, 1024, "Seg.%d.Bpt.%d", inPlace, m_i);
+			_Base_Bpt* _Bpt = new _Base_Bpt(inIni, _SonSecName);
+			Bpt.Inster(_Bpt);
+			m_i++;
+		}
+		free(_SecName);
+		free(_SonSecName);
 	}
 /**
 * @See		初始化_Base_Segment

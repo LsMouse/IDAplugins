@@ -13,6 +13,8 @@
 #include <idp.hpp> 
 #include <loader.hpp>
 #include <name.hpp>
+#include <ua.hpp>
+#include <Dbg.hpp>
 #include <IDAClass/IDA_SDK.H>
 /*包含子类头文件*/
 #include <Debug/Util_LIB_Debug.H> 

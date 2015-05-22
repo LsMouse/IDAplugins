@@ -42,6 +42,7 @@ public:
 			if (Seg.Get()->CheckCode == inBSeg->CheckCode){
 				//存在共同体,想将数据加载到IDAMem，
 				//若IDAMem不存在这段，就不在对Seg更改
+				Debug::MSG("AddSegment is Have,GetLength:%d\n", Seg.GetLength());
 				inBSeg->To_IDAMem();
 				if (inBSeg->FindSegment() != NULL)
 					Seg.Get()->AddSegment(inBSeg->FindSegment());
@@ -90,5 +91,6 @@ public:
 			m_i++;
 		}
 		To_IDAMem();
+		Debug::MSG("Online_Save@ Online_Load() Over \n");
 	}
 };

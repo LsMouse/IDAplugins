@@ -54,7 +54,6 @@ public:
 		if (_OldReCmt != NULL)free(_OldReCmt);
 		return OutBool;
 	}
-
 /**
 * @See		将数据转化成INI节模式
 * @Param　	inIni -> INI类

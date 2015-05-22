@@ -38,6 +38,7 @@ void RunMode(int inMode){
 	switch (inMode){
 	case MODE_NOTE_UP:
 		if (OnSave.Seg.GetLength() == 0)return;
+		if (!MulThread)	SaveFile = askfile_c(1, "*.ini", "保存注释文件");
 		_AutoBuf = (char*)Util_Base::Alloc(1024);
 		OnSave.UpAllSegment();
 		sprintf(_AutoBuf, 1024, "%s_Auto", SaveFile);
@@ -48,10 +49,12 @@ void RunMode(int inMode){
 		OnSave.AddSegment(getseg(_ea));
 	break;
 	case MODE_NOTE_FILE:
+		if (!MulThread)	LoadFile = askfile_c(1, "*.ini", "导入注释文件");
 		if (LoadFile == NULL)return;
 		OnSave.Online_Load(LoadFile);
 	break;
 	case MODE_NOTE_SAVE:
+		if (!MulThread)	SaveFile = askfile_c(1, "*.ini", "保存注释文件");
 		OnSave.Save(SaveFile);
 	break;
 	case MODE_NOTE_PRINTF:
