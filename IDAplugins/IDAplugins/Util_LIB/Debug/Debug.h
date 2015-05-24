@@ -1,6 +1,6 @@
 #include "Util_LIB.H"
 //
-static int Debug_En = 0;
+static int Debug_En = TRUE;
 //
 class Debug{
 public:

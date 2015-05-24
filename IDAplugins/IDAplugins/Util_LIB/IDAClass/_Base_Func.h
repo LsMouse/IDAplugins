@@ -20,6 +20,19 @@ public:
 		return Out;
 	}
 /**
+* @See		获取IDA 函数名称
+* @Param　	inFun -> IDA函数类
+* @Return　	Out_Sec -> 函数名称
+*/
+	static char* GetFuncCmt(func_t* inFun,bool rptble){
+		if (get_func_cmt(inFun, rptble) != NULL){
+			return strdup(get_func_cmt(inFun, rptble));
+		}
+		return NULL;
+	}
+
+
+/**
 * @See		将数据转化成INI节模式
 * @Param　	inIni -> INI类
 * @Return　	inSecName -> 节名
@@ -62,8 +75,8 @@ public:
 		StartEA = inFun->startEA - inSeg->startEA;
 		//获取名字、注释
 		Name = GetFuncName(inFun);
-		Cmt = _Base_Cmt::GetCmt(inFun->startEA,0);
-		ReCmt = _Base_Cmt::GetCmt(inFun->startEA, 0);
+		Cmt = GetFuncCmt(inFun, 0);
+		ReCmt = GetFuncCmt(inFun, 0);
 	}
 /**
 * @See		初始化_Base_Func

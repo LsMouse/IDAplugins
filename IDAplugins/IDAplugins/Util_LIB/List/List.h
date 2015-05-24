@@ -58,8 +58,7 @@ public:
 				_m_point->_N_next = NULL;
 			}
 		}**/
-		First = Last = NULL;
-		Length = 0; 
+		_List_Base();
 	}
 /**
 * @See	初始化列表

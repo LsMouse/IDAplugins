@@ -10,7 +10,7 @@
 //以下定义UI和模式枚举
 int NoteMode = 0;
 HANDLE HandlerNo = 0;
-boolean MulThread = FALSE;
+boolean MulThread = TRUE;
 boolean WorkIng = FALSE;
 char* SaveFile = NULL;
 char* LoadFile = NULL;
@@ -37,6 +37,7 @@ void RunMode(int inMode){
 	char* _AutoBuf = NULL;
 	switch (inMode){
 	case MODE_NOTE_UP:
+		Debug::MSG("Have Length:%d\n", OnSave.Seg.GetLength());
 		if (OnSave.Seg.GetLength() == 0)return;
 		if (!MulThread)	SaveFile = askfile_c(1, "*.ini", "保存注释文件");
 		_AutoBuf = (char*)Util_Base::Alloc(1024);
@@ -49,9 +50,10 @@ void RunMode(int inMode){
 		OnSave.AddSegment(getseg(_ea));
 	break;
 	case MODE_NOTE_FILE:
-		if (!MulThread)	LoadFile = askfile_c(1, "*.ini*", "导入注释文件");
+		if (!MulThread)	LoadFile = askfile_c(1, "*.*", "导入注释文件");
 		if (LoadFile == NULL)return;
 		OnSave.Online_Load(LoadFile);
+
 	break;
 	case MODE_NOTE_SAVE:
 		if (!MulThread)	SaveFile = askfile_c(1, "*.ini", "保存注释文件");
@@ -71,7 +73,7 @@ DWORD WINAPI Mul_Hander(LPVOID lpParam){
 	Debug::MSG("Mul_Hander(%d)@ is Run \n", NoteMode);
 	RunMode(NoteMode);
 	WorkIng = FALSE;
-	Debug::MSG("Mul_Hander(%d)@ is End \n", NoteMode);
+	Debug::MSG("Mul_Hander(%d)@ is End\n", NoteMode);
 	CloseHandle(HandlerNo);
 	return 0;
 }
@@ -88,7 +90,6 @@ int Note_Moudle(){
 	int _Config = MulThread;
 	if (WorkIng){
 		_MSG("之前操作未处理完毕，请稍后再试\n");
-
 		return 0;
 	}
 	if (AskUsingForm_c(ASK_NOTE_UI, &NoteMode,&_Config) == 0)return -1;
@@ -105,7 +106,7 @@ int Note_Moudle(){
 			SaveFile = askfile_c(1, "*.ini", "保存注释文件");
 			if (SaveFile == NULL)return 0;
 		}else if (NoteMode == MODE_NOTE_FILE){
-			LoadFile = askfile_c(0, "*.ini", "导入注释文件");
+			LoadFile = askfile_c(0, "*.*", "导入注释文件");
 			if (LoadFile == NULL)return 0;
 		}
 		else if (NoteMode == MODE_NOTE_UP){

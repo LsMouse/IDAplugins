@@ -13,8 +13,11 @@ public:
 			ulong _Code = Util_Char::ReadCheck(_Seg->startEA);
 			Seg.Reset();
 			while (Seg.Get() != NULL){
-				if (_Code == Seg.Get()->CheckCode){
-					Seg.Get()->AddSegment(_Seg);
+				if (Seg.Get()->Size == (_Seg->endEA - _Seg->startEA)){
+					if (_Code == Seg.Get()->CheckCode){
+						Debug::MSG("UpAllSegment()@ AddSegment!\n");
+						Seg.Get()->AddSegment(_Seg);
+					}
 				}
 				Seg.Next();
 			}
@@ -98,6 +101,6 @@ public:
 			m_i++;
 		}
 		To_IDAMem();
-		Debug::MSG("Online_Save@ Online_Load() Over \n");
+		Debug::MSG("Online_Save@ Online_Load() Over\n");
 	}
 };

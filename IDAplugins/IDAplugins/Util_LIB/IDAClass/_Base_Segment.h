@@ -29,6 +29,7 @@ public:
 * @See		在系统中更新最新段
 */	
 	void UpSegment(){
+		Debug::MSG("_Base_Segment@UpSegment()\n");
 		segment_t* m_Seg = FindSegment();
 		if (m_Seg == NULL){
 			Debug::MSG("_Base_Segment@ To_IDAMem() No Find \n");
@@ -41,6 +42,7 @@ public:
 *	在当前IDA中，更新已添加的段
 */
 	void To_IDAMem(){
+		Debug::MSG("_Base_Segment@To_IDAMem()\n");
 		segment_t* m_Seg = FindSegment();
 		if (m_Seg == NULL){
 			Debug::MSG("_Base_Segment@ To_IDAMem() No Find \n");
@@ -97,7 +99,7 @@ public:
 		//查找断点
 		_ThisEA = inSeg->startEA;
 		while (_ThisEA <= inSeg->endEA){
-			if (check_bpt(_ThisEA) != BPTCK_NONE){
+			if (check_bpt(_ThisEA) > 0){
 				Bpt.Inster(new _Base_Bpt(inSeg, _ThisEA));
 				_ThisEA += 1;
 			}
