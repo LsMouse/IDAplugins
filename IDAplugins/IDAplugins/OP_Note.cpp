@@ -20,7 +20,7 @@ const char ASK_NOTE_UI[] = "Note Options\n\n\n"
 						"<#加载当前段# ~A~ddSegment:R>\n"
 						"<#从文件中加载# ~F~orm File:R>\n"
 						"<#保存成文件# ~S~ave File:R>\n"
-						"<#打印段数据# ~P~rintf :R>>\n"
+						"<#清空# ~C~LR :R>>\n"
 						"<##配置选择##是否启动多线程处理:C>>\n";
 enum{
 	MODE_NOTE_UP,
@@ -39,12 +39,13 @@ void RunMode(int inMode){
 	case MODE_NOTE_UP:
 		Debug::MSG("Have Length:%d\n", OnSave.Seg.GetLength());
 		if (OnSave.Seg.GetLength() == 0)return;
-		if (!MulThread)	SaveFile = askfile_c(1, "*.ini", "保存注释文件");
 		_AutoBuf = (char*)Util_Base::Alloc(1024);
+		sprintf(_AutoBuf, 1024, "%s.back", SaveFile);
+		Util_File::CPFile(_AutoBuf, SaveFile);
+		if (!MulThread)	SaveFile = askfile_c(1, "*.ini", "保存注释文件");
+		Debug::MSG("OnSave.UpAllSegment();");
 		OnSave.UpAllSegment();
-		sprintf(_AutoBuf, 1024, "%s_Auto", SaveFile);
-		OnSave.Save(_AutoBuf);
-		free(_AutoBuf);
+		OnSave.Save(SaveFile);
 	break;
 	case MODE_NOTE_ADD:
 		OnSave.AddSegment(getseg(_ea));
@@ -53,15 +54,13 @@ void RunMode(int inMode){
 		if (!MulThread)	LoadFile = askfile_c(1, "*.*", "导入注释文件");
 		if (LoadFile == NULL)return;
 		OnSave.Online_Load(LoadFile);
-
 	break;
 	case MODE_NOTE_SAVE:
 		if (!MulThread)	SaveFile = askfile_c(1, "*.ini", "保存注释文件");
 		OnSave.Save(SaveFile);
 	break;
 	case MODE_NOTE_PRINTF:
-
-
+		OnSave.Seg.Clear();
 	break;
 	}
 

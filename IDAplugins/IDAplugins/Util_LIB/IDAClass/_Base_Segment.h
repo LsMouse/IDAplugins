@@ -17,7 +17,7 @@ public:
 				ulong _Code = Util_Char::ReadCheck(getnseg(m_i)->startEA);
 				if (_Code == CheckCode){
 					Debug::MSG("FindSegment@ _Code()Start:0x%08x\n", getnseg(m_i)->startEA);
-					Debug::MSG("FindSegment@ _Code():0x%08x,CheckCode:0x%08x\n", _Code, CheckCode);
+					Debug::MSG("FindSegment@ _Code():0x%08x\n", CheckCode);
 					return getnseg(m_i);
 				}
 			}
@@ -32,10 +32,28 @@ public:
 		Debug::MSG("_Base_Segment@UpSegment()\n");
 		segment_t* m_Seg = FindSegment();
 		if (m_Seg == NULL){
-			Debug::MSG("_Base_Segment@ To_IDAMem() No Find \n");
+			Debug::MSG("_Base_Segment@ UpSegment() No Find \n");
 			return;
 		}
+		Debug::MSG("_Base_Segment@Segm Start:0x%08x\n", m_Seg->startEA);
 		AddSegment(m_Seg);
+		Debug::MSG("_Base_Segment@ UpSegment() Func Len:%d\n", Func.GetLength());
+		Debug::MSG("_Base_Segment@ UpSegment() Cmt Len:%d\n", Cmt.GetLength());
+		Debug::MSG("_Base_Segment@ UpSegment() Bpt Len:%d\n", Bpt.GetLength());
+	}
+/**
+* @See		在系统中更新最新段
+*/
+	void UpSegment(segment_t* _inSeg){
+		if (_inSeg == NULL){
+			Debug::MSG("_Base_Segment@ UpSegment() No Find \n");
+			return;
+		}
+		Debug::MSG("_Base_Segment@Segm Start:0x%08x\n", _inSeg->startEA);
+		AddSegment(_inSeg);
+		Debug::MSG("_Base_Segment@ UpSegment() Func Len:%d\n", Func.GetLength());
+		Debug::MSG("_Base_Segment@ UpSegment() Cmt Len:%d\n", Cmt.GetLength());
+		Debug::MSG("_Base_Segment@ UpSegment() Bpt Len:%d\n", Bpt.GetLength());
 	}
 /**
 * @See	更新全部列表
@@ -49,18 +67,21 @@ public:
 			return;
 		}
 		//函数更新
+		Debug::MSG("_Base_Segment@To_IDAMem()->函数更新\n");
 		Func.Reset();
 		while (Func.Get() != NULL){
 			Func.Get()->To_IDAMem(m_Seg->startEA);
 			Func.Next();
 		}
 		//注释更新
+		Debug::MSG("_Base_Segment@To_IDAMem()->注释更新\n");
 		Cmt.Reset();
 		while (Cmt.Get() != NULL){
 			Cmt.Get()->To_IDAMem(m_Seg->startEA);
 			Cmt.Next();
 		}
 		//断点更新
+		Debug::MSG("_Base_Segment@To_IDAMem()->断点更新\n");
 		Bpt.Reset();
 		while (Bpt.Get() != NULL){
 			Bpt.Get()->To_IDAMem(m_Seg->startEA);
@@ -74,7 +95,6 @@ public:
 */
 	void AddSegment(segment_t* inSeg){
 		if (inSeg == NULL)return;
-		//清除数据
 		Func.Clear();
 		Cmt.Clear();
 		Bpt.Clear();
@@ -82,6 +102,7 @@ public:
 		CheckCode = Util_Char::ReadCheck(inSeg->startEA);
 		Size = inSeg->endEA - inSeg->startEA;
 		//查找函数体
+		Debug::MSG("_Base_Segment@AddSegment()->查找函数体\n");
 		func_t* _func = get_func(inSeg->startEA);
 		if (_func == NULL)_func = get_next_func(inSeg->startEA);
 		while ((_func != NULL) && (inSeg->endEA > _func->startEA)){
@@ -89,16 +110,19 @@ public:
 			_func = get_next_func(_func->startEA);
 		}
 		//查找注释
+		Debug::MSG("_Base_Segment@AddSegment()->查找注释\n");
 		ea_t _ThisEA = inSeg->startEA;
-		while (_ThisEA <= inSeg->endEA){
+		while (_ThisEA < inSeg->endEA){
 			if (_Base_Cmt::isCmt(_ThisEA)){
 				Cmt.Inster(new _Base_Cmt(inSeg, _ThisEA));
+				_ThisEA += 3;
 			}
 			_ThisEA++;
 		}
 		//查找断点
+		Debug::MSG("_Base_Segment@AddSegment()->查找断点\n");
 		_ThisEA = inSeg->startEA;
-		while (_ThisEA <= inSeg->endEA){
+		while (_ThisEA < inSeg->endEA){
 			if (check_bpt(_ThisEA) > 0){
 				Bpt.Inster(new _Base_Bpt(inSeg, _ThisEA));
 				_ThisEA += 1;

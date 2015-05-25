@@ -7,23 +7,22 @@ public:
 *	在当前IDA中，更新已添加的段
 */
 	void UpAllSegment(){
-		int m_i = 0;
-		segment_t* _Seg = getnseg(m_i);
-		while (_Seg != NULL){
-			ulong _Code = Util_Char::ReadCheck(_Seg->startEA);
-			Seg.Reset();
-			while (Seg.Get() != NULL){
+		Seg.Reset();
+		while (Seg.Get() != NULL){
+			int m_i = 0;
+			segment_t* _Seg = getnseg(m_i);
+			while (_Seg != NULL){
 				if (Seg.Get()->Size == (_Seg->endEA - _Seg->startEA)){
+					ulong _Code = Util_Char::ReadCheck(_Seg->endEA);
 					if (_Code == Seg.Get()->CheckCode){
-						Debug::MSG("UpAllSegment()@ AddSegment!\n");
 						Seg.Get()->AddSegment(_Seg);
 					}
 				}
-				Seg.Next();
+				m_i++;
+				_Seg = getnseg(m_i);
 			}
-			m_i++;
-			_Seg = getnseg(m_i);
-		}
+			Seg.Next();
+		}	
 	}
 /**
 * @See	将当前段信息全部更新到IDA中
@@ -43,11 +42,6 @@ public:
 	void AddSegment(_Base_Segment* inBSeg){
 		if (inBSeg == NULL)return;
 		Debug::MSG("CheckCode:0x%08x\n", inBSeg->CheckCode);
-		//之前链表为空，直接加载
-		if (Seg.GetLength() == 0){
-			Seg.Inster(inBSeg);
-			return;
-		}
 		//查找是否有匹配段
 		Seg.Reset();
 		while (Seg.Get() != NULL){
@@ -55,7 +49,7 @@ public:
 				//存在共同体,想将数据加载到IDAMem，
 				//若IDAMem不存在这段，就不在对Seg更改
 				Debug::MSG("AddSegment is Have,GetLength:%d\n", Seg.GetLength());
-				inBSeg->To_IDAMem();			
+				//inBSeg->To_IDAMem();			
 				return;
 			}
 			Seg.Next();

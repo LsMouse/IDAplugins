@@ -5,8 +5,8 @@
 class _Base_Cmt{
 public:
 	ea_t StartEA;
-	char* Cmt;
-	char* ReCmt;
+	char* Cmt = NULL;
+	char* ReCmt = NULL;
 /**
 * @See	获取注释数据
 */
@@ -27,32 +27,9 @@ public:
 		char* _Cmt = GetCmt(inAddr, 0);
 		char* _ReCmt = GetCmt(inAddr, 1);
 		if ((_Cmt == NULL) && (_ReCmt == NULL))return FALSE;
-		char* _OldCmt = GetCmt(inAddr-1, 0);
-		char* _OldReCmt = GetCmt(inAddr-1, 1);
-		//判断之前数据是否存在
-		if ((_OldCmt == NULL) && (_OldReCmt == NULL)){
-			OutBool = TRUE;
-		}
-		else{
-			//判断数据是否相同
-			if (_Cmt != _OldCmt){
-				if (strcmp(_Cmt, _OldCmt) == 0)OutBool = FALSE;
-				else OutBool = TRUE;
-			}
-			else if (_ReCmt != _OldReCmt){
-				if (strcmp(_ReCmt, _OldReCmt) == 0)OutBool = FALSE;
-				else OutBool = TRUE;
-			}
-			else if ((strcmp(_Cmt, _OldReCmt) == 0) && (strcmp(_ReCmt, _OldReCmt) == 0)){
-				OutBool = FALSE;
-			}
-			else OutBool = TRUE;
-		}
 		if (_Cmt != NULL)free(_Cmt);
 		if (_ReCmt != NULL)free(_ReCmt);
-		if (_OldCmt != NULL)free(_OldCmt);
-		if (_OldReCmt != NULL)free(_OldReCmt);
-		return OutBool;
+		return TRUE;
 	}
 /**
 * @See		将数据转化成INI节模式

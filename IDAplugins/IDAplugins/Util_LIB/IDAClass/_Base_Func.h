@@ -76,7 +76,7 @@ public:
 		//获取名字、注释
 		Name = GetFuncName(inFun);
 		Cmt = GetFuncCmt(inFun, 0);
-		ReCmt = GetFuncCmt(inFun, 0);
+		ReCmt = GetFuncCmt(inFun, 1);
 	}
 /**
 * @See		初始化_Base_Func

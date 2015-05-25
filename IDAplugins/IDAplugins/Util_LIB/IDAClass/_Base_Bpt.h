@@ -19,8 +19,8 @@ public:
 * @Param¡¡	inStartEA -> ¶ÎÆäÊµµØÖ·
 */
 	void To_IDAMem(ea_t inStartEA){
-		if (check_bpt(inStartEA + StartEA) > 0)return;
-			add_bpt(inStartEA + StartEA);
+		if (check_bpt(inStartEA + StartEA) != BPTCK_NONE)return;
+		add_bpt(inStartEA + StartEA);
 	//	
 	}
 /**

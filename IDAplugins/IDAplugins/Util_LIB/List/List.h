@@ -48,16 +48,8 @@ public:
 * @See		清楚整个链表内容
 */
 	void Clear(){
-// 存在问题
-/*		if ((First != NULL) && (Last != NULL)){
-			LP_Node _m_point = Last;
-			while (_m_point != NULL){
-				_m_point->info = NULL;
-				_m_point = _m_point->_N_prev;
-				free(_m_point->_N_next);
-				_m_point->_N_next = NULL;
-			}
-		}**/
+		First = Last = NULL;
+		Length = 0;
 		_List_Base();
 	}
 /**
@@ -149,6 +141,8 @@ public:
 * @See		初始化列表
 */
 	List(){
+		_LinkThis = NULL; 
+		_NoThis = 0;
 		_List_Base();
 	}
 };

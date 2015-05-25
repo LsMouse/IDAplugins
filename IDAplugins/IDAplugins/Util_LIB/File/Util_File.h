@@ -36,5 +36,29 @@ public:
 		fclose(mFile);
 		return m_buf;
 	}
+/**
+* @See		复制文件
+* @Param　inDest -> 目的文件
+* @Param　mode -> 源文件
+*/
+	static void CPFile(const char* inDest, const char* inSrc){
+		if (inDest == NULL)return;
+		if (inSrc == NULL)return;
+		char* _Buf = Read(inSrc, "rb+");
+		if (_Buf == NULL)return;
+		if (strlen(_Buf) > 5){
+			FILE* m_fd = fopen(inDest, "wb+");
+			if (m_fd != NULL){
+				fwrite(m_fd, _Buf);
+				fclose(m_fd);
+			}
+		}
+		free(_Buf);
+	}
+/**
+* @See		
+* @Param　
+* @Param　
+*/
 };
 

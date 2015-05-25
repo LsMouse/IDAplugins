@@ -16,8 +16,18 @@ enum{
 };
 //Code定义
 const char ASK_CODE_UI[] = "ARM CODE\n\n\n"
+			"<#Thumb# Code_16Bit JMP $:R>\n"
+			"<#Thumb# Code_16Bit NOP:R>\n"
+			"<#ARM# Code_32Bit JMP $:R>\n"
+			"<#ARM# Code_32Bit NOP:R>\n"
 			"<#Thumb# Mode 16Bit:R>\n"
 			"<#ARM# Mode 32Bit:R>>\n";
+enum{
+	MODE_ARMOPC16_JMP,
+	MODE_ARMOPC16_NOP,
+	MODE_ARMOPC32_JMP,
+	MODE_ARMOPC32_NOP,
+};
 //SysCallUI定义
 const char ASK_SYSCALL_UI[] = "STARTITEM  0\n"
 				"输入系统调用的参数\n"
@@ -31,12 +41,30 @@ const char ASK_SYSCALL_UI[] = "STARTITEM  0\n"
 int ModeOption = 0;
 int Arm_Moudle(){
 	int Mode_Bit = 0;
+	ea_t _ThisEa = get_screen_ea();
 	if (AskUsingForm_c(ASK_ARM_UI, &ModeOption) == 0)return -1;
 	switch (ModeOption){
 	case MODE_ARMOP_Code:
 		_MSG("Entry ARM Code!\n");
 		if (AskUsingForm_c(ASK_CODE_UI, &Mode_Bit) == 0)return 0;
-
+		switch (Mode_Bit){
+		case MODE_ARMOPC16_JMP:
+			_ThisEa &= 0xFFFFFFFE;
+			patch_long(_ThisEa, 0xE7FE);
+		break;
+		case MODE_ARMOPC16_NOP:
+			_ThisEa &= 0xFFFFFFFE;
+			patch_word(_ThisEa, 0xC046);
+		break;
+		case MODE_ARMOPC32_JMP:
+			_ThisEa &= 0xFFFFFFFC;
+			patch_long(_ThisEa, 0xEAFFFFFE);
+		break;
+		case MODE_ARMOPC32_NOP:
+			_ThisEa &= 0xFFFFFFFC;
+			patch_long(_ThisEa, 0xE1A00000);
+		break;
+		}
 	break;
 	case MODE_ARMOP_SysCall:
 		_MSG("Entry ARM SysCall!\n");
