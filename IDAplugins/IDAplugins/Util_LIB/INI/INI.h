@@ -8,6 +8,17 @@ public:
 	char* Name = NULL;
 	char* Value = NULL;
 /*
+..	Name : GetValue
+..	Function :　获取Value保存字符串
+*/
+	char* GetValue(){
+		if (Value == NULL)return NULL;
+		char* _OutChat = strdup(Value);
+		Util_Char::ReplaceChar(_OutChat, 0x0A, 0x01);
+		Util_Char::ReplaceChar(_OutChat, 0x0D, 0x02);
+		return _OutChat;
+	}
+/*
 ..	Name : C_INI_Key构造函数
 ..	Function :　初始化字符串值
 */
@@ -280,8 +291,8 @@ public:
 						memset(p_Value, 0, mLen_Value + 1);
 						memcpy(p_Value, &FileBuf[mStart_Value], mLen_Value);
 						p_Value = trim(p_Value);
-						Util_Char::ReplaceChar(p_Value, 0x0D, 0x01);
-						Util_Char::ReplaceChar(p_Value, 0x0A, 0x02);
+						Util_Char::ReplaceChar(p_Value, 0x01, 0x0A);
+						Util_Char::ReplaceChar(p_Value, 0x02, 0x0D);
 						//添加到列表，
 					//	Debug::MSG("FindKey:%s,%s\n", p_Key, p_Value);
 						addStrValue(p_SecName, p_Key, p_Value);
@@ -313,7 +324,7 @@ public:
 				memset(mBuf, 0, 10 * 1024);
 				sprintf(mBuf, 1024, "%s = %s\r\n",
 					Section->Get()->Key->Get()->Name,
-					Section->Get()->Key->Get()->Value);
+					Section->Get()->Key->Get()->GetValue());
 				Util_File::fwrite(m_fd, mBuf);
 				Section->Get()->Key->Next();
 			}

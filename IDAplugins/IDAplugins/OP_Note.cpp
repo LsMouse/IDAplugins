@@ -43,7 +43,7 @@ void RunMode(int inMode){
 		sprintf(_AutoBuf, 1024, "%s.back", SaveFile);
 		Util_File::CPFile(_AutoBuf, SaveFile);
 		if (!MulThread)	SaveFile = askfile_c(1, "*.ini", "±£´æ×¢ÊÍÎÄ¼þ");
-		Debug::MSG("OnSave.UpAllSegment();");
+		Debug::MSG("OnSave.UpAllSegment();\n");
 		OnSave.UpAllSegment();
 		OnSave.Save(SaveFile);
 	break;

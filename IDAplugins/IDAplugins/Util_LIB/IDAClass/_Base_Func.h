@@ -57,6 +57,12 @@ public:
 			set_cmt(inStartEA + StartEA, Cmt, 0);
 		if (ReCmt != NULL)
 			set_cmt(inStartEA + StartEA, ReCmt, 1);
+		func_t* _func = get_func(inStartEA + StartEA);
+		if (_func == NULL)return;
+		if (Cmt != NULL)
+			set_func_cmt(_func, Cmt, 0);
+		if (ReCmt != NULL)
+			set_func_cmt(_func, ReCmt, 1);
 		if (memcmp(Name, "sub_", 4) == 0)return;
 		if (memcmp(Name, "loc_", 4) == 0)return;
 		if (memcmp(Name, "_", 1) == 0)return;

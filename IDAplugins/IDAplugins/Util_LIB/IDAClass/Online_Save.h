@@ -13,8 +13,9 @@ public:
 			segment_t* _Seg = getnseg(m_i);
 			while (_Seg != NULL){
 				if (Seg.Get()->Size == (_Seg->endEA - _Seg->startEA)){
-					ulong _Code = Util_Char::ReadCheck(_Seg->endEA);
+					ulong _Code = Util_Char::ReadCheck(_Seg->startEA);
 					if (_Code == Seg.Get()->CheckCode){
+						Debug::MSG("startEA:0x%08x\n", _Seg->startEA);
 						Seg.Get()->AddSegment(_Seg);
 					}
 				}
