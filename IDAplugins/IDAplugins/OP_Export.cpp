@@ -60,16 +60,22 @@ void Dump(){
 */
 void FileUpdate(){
 	//初始化变量，
-	ulong mem_st = get_screen_ea(), file_st = get_screen_ea() - getseg(get_screen_ea())->startEA, mszie = getseg(get_screen_ea())->endEA - get_screen_ea();
+	ulong mem_st = get_screen_ea(), file_st = mem_st, mszie = getseg(get_screen_ea())->endEA - get_screen_ea();
 	if (AskUsingForm_c(ASK_FILEDUMP_UI, &mem_st, &file_st, &mszie) == 0)return;
 	if (mszie == 0)return;
 	char* m_filepath = askfile_c(0, "*.*", "打开文件");
 	if (m_filepath == NULL)return;
-	FILE* mFile = fopen(m_filepath, "rb");
+	FILE* mFile = fopen(m_filepath, "rb+");
 	fseek(mFile, 0, SEEK_END); //定位到文件末 
 	ulong fileSzie = qftell(mFile);
 	fseek(mFile, 0, SEEK_SET); //定位到文件初
-	char* m_buf = (char*)malloc(fileSzie);
+	//判断原本文件大，还是我们要更新的文件要大
+	ulong _AllocMem = fileSzie;
+	if (fileSzie <(file_st + mszie)){
+		_AllocMem = file_st + mszie;
+	}
+	char* m_buf = (char*)malloc(_AllocMem);
+	memset(m_buf, 0, _AllocMem);
 	qfread(mFile, m_buf, fileSzie);
 	ulong m_i = 0;
 	while (m_i < mszie){
@@ -78,9 +84,9 @@ void FileUpdate(){
 	}
 	char* newFilename = (char*)malloc(1024); memset(newFilename, 0, 1024);
 	sprintf(newFilename, 1024, "%s.dump", m_filepath);
-	FILE* mSaveFile = fopen(newFilename, "wb");
+	FILE* mSaveFile = fopen(newFilename, "wb+");
 	//写入数据
-	qfwrite(mSaveFile, m_buf, fileSzie);
+	qfwrite(mSaveFile, m_buf, _AllocMem);
 	fclose(mSaveFile);
 	fclose(mFile);
 	//回收内存

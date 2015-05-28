@@ -114,10 +114,16 @@
     <ClInclude Include="Util_LIB\IDAClass\Online_Save.h">
       <Filter>Util_LIB\IDACLASS</Filter>
     </ClInclude>
-    <ClInclude Include="Util_LIB\ELF\ELF.H">
+    <ClInclude Include="Util_LIB\ELF\Util_ELF.H">
       <Filter>Util_LIB\ELF</Filter>
     </ClInclude>
-    <ClInclude Include="Util_LIB\ELF\Util_ELF.H">
+    <ClInclude Include="Util_LIB\ELF\ELF32.H">
+      <Filter>Util_LIB\ELF</Filter>
+    </ClInclude>
+    <ClInclude Include="Util_LIB\ELF\ELF32_Typedef.H">
+      <Filter>Util_LIB\ELF</Filter>
+    </ClInclude>
+    <ClInclude Include="Util_LIB\ELF\ELF32_Header.H">
       <Filter>Util_LIB\ELF</Filter>
     </ClInclude>
   </ItemGroup>
