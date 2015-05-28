@@ -22,6 +22,10 @@
 #include <File/Util_LIB_File.H>
 #include <List/Util_LIB_List.H>
 #include <INI/Util_LIB_INI.H>
+//
+#include <ELF/Util_ELF.H>
+
+
 
 #include <Linux/Util_LIB_Linux.H>
 /**/

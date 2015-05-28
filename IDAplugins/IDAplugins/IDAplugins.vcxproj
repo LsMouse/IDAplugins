@@ -111,6 +111,8 @@
     <ClInclude Include="Util_LIB\Char\Util_LIB_Char.H" />
     <ClInclude Include="Util_LIB\Debug\Debug.h" />
     <ClInclude Include="Util_LIB\Debug\Util_LIB_Debug.H" />
+    <ClInclude Include="Util_LIB\ELF\ELF.H" />
+    <ClInclude Include="Util_LIB\ELF\Util_ELF.H" />
     <ClInclude Include="Util_LIB\File\Util_File.h" />
     <ClInclude Include="Util_LIB\File\Util_LIB_File.H" />
     <ClInclude Include="Util_LIB\IDAClass\AskUI.h" />

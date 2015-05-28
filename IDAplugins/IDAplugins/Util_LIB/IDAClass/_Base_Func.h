@@ -13,6 +13,7 @@ public:
 	static char* GetFuncName(func_t* inFun){
 		char* Out = NULL;
 		char* Buf = (char*)Util_Base::Alloc(10240);
+		
 		if (get_func_name(inFun->startEA, Buf, 10240) != NULL){
 			Out = strdup(Buf);
 		}
@@ -53,20 +54,25 @@ public:
 	void To_IDAMem(ea_t inStartEA){
 		ua_code(inStartEA + StartEA);
 		add_func(inStartEA + StartEA, BADADDR);
-		if (Cmt != NULL)
-			set_cmt(inStartEA + StartEA, Cmt, 0);
-		if (ReCmt != NULL)
-			set_cmt(inStartEA + StartEA, ReCmt, 1);
+	
 		func_t* _func = get_func(inStartEA + StartEA);
-		if (_func == NULL)return;
+		if (_func == NULL){
+			if (Cmt != NULL)
+				set_cmt(inStartEA + StartEA, Cmt, 0);
+			if (ReCmt != NULL)
+				set_cmt(inStartEA + StartEA, ReCmt, 1);
+			return;
+		}
 		if (Cmt != NULL)
 			set_func_cmt(_func, Cmt, 0);
 		if (ReCmt != NULL)
 			set_func_cmt(_func, ReCmt, 1);
+		if (Name == NULL)return;
 		if (memcmp(Name, "sub_", 4) == 0)return;
 		if (memcmp(Name, "loc_", 4) == 0)return;
 		if (memcmp(Name, "_", 1) == 0)return;
-		set_name(inStartEA + StartEA, Name, 1);
+		
+	//	set_name(inStartEA + StartEA, Name, 1);
 	}
 /**
 * @See		≥ı ºªØ_Base_Func
