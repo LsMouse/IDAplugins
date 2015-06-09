@@ -52,26 +52,26 @@ public:
 * @Param　	inStartEA -> 段其实地址
 */
 	void To_IDAMem(ea_t inStartEA){
-		ua_code(inStartEA + StartEA);
-		add_func(inStartEA + StartEA, BADADDR);
-	
-		func_t* _func = get_func(inStartEA + StartEA);
-		if (_func == NULL){
-			if (Cmt != NULL)
-				set_cmt(inStartEA + StartEA, Cmt, 0);
-			if (ReCmt != NULL)
-				set_cmt(inStartEA + StartEA, ReCmt, 1);
-			return;
+		if (Cmt != NULL){
+			set_cmt(inStartEA + StartEA, Cmt, 0);
 		}
-		if (Cmt != NULL)
+		if (ReCmt != NULL){
+			set_cmt(inStartEA + StartEA, ReCmt, 1);
+		}
+		func_t* _func = get_func(inStartEA + StartEA);
+		if (_func == NULL)return;
+//		ua_code(inStartEA + StartEA);		//增加后会提高错误率
+		if (Cmt != NULL){
 			set_func_cmt(_func, Cmt, 0);
-		if (ReCmt != NULL)
+		}
+		if (ReCmt != NULL){
 			set_func_cmt(_func, ReCmt, 1);
+		}	
 		if (Name == NULL)return;
 		if (memcmp(Name, "sub_", 4) == 0)return;
 		if (memcmp(Name, "loc_", 4) == 0)return;
 		if (memcmp(Name, "_", 1) == 0)return;
-		
+		if (memcmp(Name, "j_", 2) == 0)return;
 	//	set_name(inStartEA + StartEA, Name, 1);
 	}
 /**

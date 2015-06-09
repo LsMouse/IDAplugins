@@ -21,7 +21,6 @@ public:
 	void To_IDAMem(ea_t inStartEA){
 		if (check_bpt(inStartEA + StartEA) != BPTCK_NONE)return;
 		add_bpt(inStartEA + StartEA);
-	//	
 	}
 /**
 * @See		≥ı ºªØ_Base_Cmt

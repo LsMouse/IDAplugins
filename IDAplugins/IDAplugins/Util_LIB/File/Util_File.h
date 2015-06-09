@@ -23,6 +23,7 @@ public:
 		if (inPath == NULL)return NULL;
 		if (mode == NULL)return NULL;
 		FILE* mFile = fopen(inPath, mode);
+		if (mFile == NULL)return NULL;
 		fseek(mFile, 0, SEEK_END); //定位到文件末 
 		ulong fileSzie = qftell(mFile);
 		if (fileSzie == 0){
