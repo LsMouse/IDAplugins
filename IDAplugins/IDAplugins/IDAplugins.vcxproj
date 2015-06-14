@@ -98,6 +98,7 @@
   <ItemGroup>
     <ClCompile Include="OP_Arm.cpp" />
     <ClCompile Include="IDA_Demo_Main.cpp" />
+    <ClCompile Include="OP_DexDump.cpp" />
     <ClCompile Include="OP_Export.cpp" />
     <ClCompile Include="OP_Import.cpp" />
     <ClCompile Include="OP_Debug.cpp" />

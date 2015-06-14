@@ -40,6 +40,9 @@
     <Filter Include="Util_LIB\ELF">
       <UniqueIdentifier>{5c803907-f0e6-4854-9e16-3900ecf4e681}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Util_LIB\Dex">
+      <UniqueIdentifier>{ac47c60e-b579-47b7-ad31-becb4efa5eb4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IDA_Demo_Main.h">
@@ -144,6 +147,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="OP_Note.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="OP_DexDump.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

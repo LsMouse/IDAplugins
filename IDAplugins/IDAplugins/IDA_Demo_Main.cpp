@@ -19,7 +19,8 @@ const char ASK_MAIN_UI[] = "STARTITEM  0\n\n"
 	"<#数据导入# ~I~mport:R:32:16:>\n"
 	"<#ARM相关功能# ~A~RM:R:32:16:>\n"
 	"<#调试# ~D~ebug:R:32:16:>\n"
-	"<#注释# ~N~ote:R:32:16:>>\n"
+	"<#注释# ~N~ote:R:32:16:>\n"
+	"<#DexDump# ~D~ex Dump:R:32:16:>>\n"
 	"<##调试选择##是否打印信息:C>>\n";
 enum{
 	MAIN_Export,
@@ -27,6 +28,7 @@ enum{
 	MAIN_ARM,
 	MAIN_Debug,
 	MAIN_Notes,
+	MAIN_DexDump,
 }MAIN_MODE_ENUM;
 /*
 *				模式说明
@@ -57,6 +59,9 @@ void _stdcall IDAP_run(int arg) {
 	case MAIN_Notes:
 		Note_Moudle();
 		break;
-		return;
+	case MAIN_DexDump:
+		Dex_Moudle();
+		break;
+	return;
 	}
 } 
