@@ -6,8 +6,11 @@
 #include <direct.h>
 #include <ctype.h> 
 #include <string.h> 
-#include <string> 
 #include <Windows.h>
+
+#include <string> 
+#include <vector>
+#include <list>
 /*IDA插件基本头*/
 #include <ida.hpp> 
 #include <idp.hpp> 
@@ -20,7 +23,7 @@
 #include <Debug/Util_LIB_Debug.H> 
 #include <Char/Util_LIB_Char.H>
 #include <File/Util_LIB_File.H>
-#include <List/Util_LIB_List.H>
+
 #include <INI/Util_LIB_INI.H>
 //
 //#include <ELF/Util_ELF.H>
@@ -31,4 +34,5 @@
 /**/
 #include <IDAClass/Util_LIB_IDAClass.H>
 /**/
+#include  <Dex/Util_Dex.H>
 #endif

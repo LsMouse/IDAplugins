@@ -5,8 +5,8 @@
 #include "_Base_Cmt.H"
 #include "_Base_Bpt.H"
 #include "_Base_Func.H"
-#include "_Base_Segment.H"
-#include "Online_Save.H"
+#include "_Base_Segment.HPP"
+#include "Online_Save.HPP"
 /**/
 
 /**/

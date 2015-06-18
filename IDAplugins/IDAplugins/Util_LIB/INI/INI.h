@@ -1,4 +1,4 @@
-#include<Util_LIB.H>
+#include <Util_LIB.HPP>
 /*
 ..	Class : C_INI_Key
 ..	Comment : 此类为INI保存参数
@@ -33,9 +33,11 @@ public:
 */
 class C_INI_Section{
 public:
+typedef std::vector<C_INI_Key> Vec_Key;
+public:
 	char* SecName = NULL;
 	long Leng = NULL;
-	List<C_INI_Key>* Key = NULL;
+	Vec_Key Key;
 /*
 ..	Name : AddInt
 ..	Function :　增加INT参数
@@ -43,7 +45,8 @@ public:
 	void AddInt(char *in_Key, int in_Value){
 		char* m_Value = (char*)Util_Base::Alloc(12);
 		sprintf(m_Value, 11, "0x%08x", in_Value);
-		Key->Inster(new C_INI_Key(in_Key, m_Value));
+		Vec_Key::value_type mKey = C_INI_Key(in_Key, m_Value);
+		Key.push_back(mKey);
 		free(m_Value);
 	}
 /*
@@ -51,7 +54,8 @@ public:
 ..	Function :　增加字符串函数
 */
 	void AddString(char *in_Key, char* in_Value){
-		Key->Inster(new C_INI_Key(in_Key, in_Value));
+		Vec_Key::value_type mKey = C_INI_Key(in_Key, in_Value);
+		Key.push_back(mKey);
 	}
 /*
 ..	Name : GetInt
@@ -59,7 +63,7 @@ public:
 */
 	int GetInt(char *in_Key){
 		if (in_Key == NULL)return NULL;
-		if (Key->First == NULL)return NULL;
+		if (Key.size() == 0)return NULL;
 		char* m_Str = GetString(in_Key);
 		if (m_Str == NULL)return NULL;
 		return strtol(m_Str, NULL, 16);
@@ -70,16 +74,12 @@ public:
 */
 	char* GetString(char *in_Name){
 		if (in_Name == NULL)return NULL;
-		if (Key->First == NULL)return NULL;
-		Key->Reset();
-		do{
-			if (Key->Get() != NULL){
-				if (!strcmp(Key->Get()->Name, in_Name)){
-					return  Key->Get()->Value;
-				}
+		if (Key.size() == 0)return NULL;
+		for (size_t m_i = 0; m_i < Key.size(); m_i++){
+			if (!strcmp(Key.at(m_i).Name, in_Name)){
+				return  Key.at(m_i).Value;
 			}
-			Key->Next();
-		} while (Key->Get() != NULL);
+		}
 		return NULL;
 	}
 /*
@@ -87,7 +87,7 @@ public:
 ..	Function :　初始化C_INI_Section类的基本全局变量、初始化长度
 */
 	C_INI_Section(char* in_name){
-		Key = new List<C_INI_Key>;
+		Key.clear();
 		SecName = strdup(in_name);
 		Leng = 0;
 	}
@@ -105,9 +105,12 @@ class INI{
 #define LEFT_BRACE			'['			//
 #define RIGHT_BRACE			']'			//
 public:
+typedef std::vector<C_INI_Key> Vec_Key;
+typedef std::vector<C_INI_Section> Vec_Sec;
+public:
 	char* iniPath = NULL;
 	char* FileBuf = NULL;
-	List<C_INI_Section>* Section = NULL;
+	Vec_Sec Section;
 /*-----------------------------------------------------------------------------------*/
 /*
 ..	Name : GetSection
@@ -116,13 +119,11 @@ public:
 ..	Ouput : NULL -> 不存在 , !NULL -> C_INI_Section*
 */
 	C_INI_Section* GetSection(char* in_SegName){
-		if (Section == NULL)return NULL;
-		Section->Reset();
-		while (Section->Get() != NULL){
-			if (!strcmp(Section->Get()->SecName, in_SegName)){
-				return Section->Get();
+		if (Section.size() == 0)return NULL;
+		for (size_t m_i = 0; m_i < Section.size(); m_i++){
+			if (!strcmp(Section.at(m_i).SecName, in_SegName)){
+				return &Section.at(m_i);
 			}
-			Section->Next();
 		}
 		return NULL;
 	}
@@ -153,9 +154,8 @@ public:
 ..	Function :  在链表中添加<in_SegName>节
 */
 	void addSection(char* in_SegName){
-		if (Section == NULL)Section = new List<C_INI_Section>;
-		C_INI_Section* mSec = new C_INI_Section(in_SegName);
-		Section->Inster(mSec);
+		Vec_Sec::value_type mSection = C_INI_Section(in_SegName);
+		Section.push_back(mSection);
 	}
 /*
 ..	Name : addStrValue
@@ -314,21 +314,18 @@ public:
 		if (in_Path == NULL)return;
 		FILE* m_fd = fopen(in_Path, "wb+");
 		char* mBuf = (char*)malloc(10 * 1024);
-		Section->Reset();
-		while (Section->Get() != NULL){
+		for (size_t m_i = 0; m_i < Section.size(); m_i++){
 			memset(mBuf, 0, 10 * 1024);
-			sprintf(mBuf, 1024, "[%s]\r\n", Section->Get()->SecName);
+			sprintf(mBuf, 1024, "[%s]\r\n", Section.at(m_i).SecName);
 			Util_File::fwrite(m_fd, mBuf);
-			Section->Get()->Key->Reset();
-			while (Section->Get()->Key->Get() != NULL){
+			Vec_Key mKey = Section.at(m_i).Key;
+			for (size_t m_j = 0; m_j < mKey.size(); m_j++){
 				memset(mBuf, 0, 10 * 1024);
 				sprintf(mBuf, 1024, "%s = %s\r\n",
-					Section->Get()->Key->Get()->Name,
-					Section->Get()->Key->Get()->GetValue());
+					mKey.at(m_j).Name,
+					mKey.at(m_j).GetValue());
 				Util_File::fwrite(m_fd, mBuf);
-				Section->Get()->Key->Next();
 			}
-			Section->Next();
 		}
 		fclose(m_fd);
 	}
@@ -337,12 +334,12 @@ public:
 */
 	INI(char* in_path){
 		iniPath = strdup(in_path);
-		Section = new List<C_INI_Section>;
+		Section.clear();
 		FileBuf = Util_File::Read(in_path, "rb+");
 		load();
 	}
 	INI(){
-		Section = new List<C_INI_Section>;
+		Section.clear();
 	}
 };
 
