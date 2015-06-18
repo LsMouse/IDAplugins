@@ -12,7 +12,7 @@ public:
 */
 	static char* GetFuncName(func_t* inFun){
 		char* Out = NULL;
-		char* Buf = (char*)Util_Base::Alloc(10240);
+		char* Buf = (char*)Util::Alloc(10240);
 		
 		if (get_func_name(inFun->startEA, Buf, 10240) != NULL){
 			Out = strdup(Buf);

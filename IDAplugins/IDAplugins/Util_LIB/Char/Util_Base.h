@@ -1,6 +1,5 @@
 #include <Util_LIB.HPP>
-class Util_Base{
-public:
+namespace Util{
 /**
 * @See	获取已清空的内存
 * @Param　inSize -> 传入内存获取宽度

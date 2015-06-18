@@ -8,7 +8,7 @@ public:
 		return mNote;
 	}
 	static char* GetSegmentName(segment_t* inSeg){
-		char* _SegName = (char*)Util_Base::Alloc(1024);
+		char* _SegName = (char*)Util::Alloc(1024);
 		if (get_segm_name(inSeg, _SegName, 1024) == NULL){
 			free(_SegName);
 			return NULL;

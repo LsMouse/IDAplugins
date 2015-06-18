@@ -12,7 +12,7 @@ public:
 */
 	static char* GetCmt(ea_t inAddr, bool rptble){
 		char* Out = NULL;
-		char* Buf = (char*)Util_Base::Alloc(10240);
+		char* Buf = (char*)Util::Alloc(10240);
 		if (get_cmt(inAddr, rptble, Buf, 10240) > 0){
 			Out = strdup(Buf);
 		}

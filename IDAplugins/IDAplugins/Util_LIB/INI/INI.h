@@ -14,8 +14,8 @@ public:
 	char* GetValue(){
 		if (Value == NULL)return NULL;
 		char* _OutChat = strdup(Value);
-		Util_Char::ReplaceChar(_OutChat, 0x0A, 0x01);
-		Util_Char::ReplaceChar(_OutChat, 0x0D, 0x02);
+		Util::ReplaceChar(_OutChat, 0x0A, 0x01);
+		Util::ReplaceChar(_OutChat, 0x0D, 0x02);
 		return _OutChat;
 	}
 /*
@@ -43,7 +43,7 @@ public:
 ..	Function :　增加INT参数
 */
 	void AddInt(char *in_Key, int in_Value){
-		char* m_Value = (char*)Util_Base::Alloc(12);
+		char* m_Value = (char*)Util::Alloc(12);
 		sprintf(m_Value, 11, "0x%08x", in_Value);
 		Vec_Key::value_type mKey = C_INI_Key(in_Key, m_Value);
 		Key.push_back(mKey);
@@ -226,7 +226,7 @@ public:
 		//开始查找整个INI文件内容
 		long po_Find = 0;
 		//判断文件是否结束
-		Debug::MSG("Find INI @ %s\n", iniPath);
+		Util::MSG("Find INI @ %s\n", iniPath);
 		while (!isEndFile(FileBuf,po_Find)){
 			//循环查找段(Section)、判断新行和查找'[',则进行查找
 			if (isLeftSectionMark(FileBuf, po_Find++)){
@@ -291,10 +291,10 @@ public:
 						memset(p_Value, 0, mLen_Value + 1);
 						memcpy(p_Value, &FileBuf[mStart_Value], mLen_Value);
 						p_Value = trim(p_Value);
-						Util_Char::ReplaceChar(p_Value, 0x01, 0x0A);
-						Util_Char::ReplaceChar(p_Value, 0x02, 0x0D);
+						Util::ReplaceChar(p_Value, 0x01, 0x0A);
+						Util::ReplaceChar(p_Value, 0x02, 0x0D);
 						//添加到列表，
-					//	Debug::MSG("FindKey:%s,%s\n", p_Key, p_Value);
+					//	Util::MSG("FindKey:%s,%s\n", p_Key, p_Value);
 						addStrValue(p_SecName, p_Key, p_Value);
 						while (isSpace(FileBuf, po_Find)){
 							po_Find++;
@@ -303,7 +303,7 @@ public:
 				}
 			}
 		}
-		Debug::MSG("Find INI End\n", iniPath);
+		Util::MSG("Find INI End\n", iniPath);
 		return 0;
 	}
 /*

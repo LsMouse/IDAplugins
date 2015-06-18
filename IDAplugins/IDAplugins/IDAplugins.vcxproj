@@ -112,6 +112,7 @@
     <ClInclude Include="Util_LIB\Char\Util_LIB_Char.H" />
     <ClInclude Include="Util_LIB\Debug\Debug.h" />
     <ClInclude Include="Util_LIB\Debug\Util_LIB_Debug.H" />
+    <ClInclude Include="Util_LIB\Dex\Util_Dex.H" />
     <ClInclude Include="Util_LIB\ELF\ELF32.H" />
     <ClInclude Include="Util_LIB\ELF\ELF32_Header.H" />
     <ClInclude Include="Util_LIB\ELF\ELF32_Typedef.H" />
@@ -119,20 +120,18 @@
     <ClInclude Include="Util_LIB\File\Util_File.h" />
     <ClInclude Include="Util_LIB\File\Util_LIB_File.H" />
     <ClInclude Include="Util_LIB\IDAClass\AskUI.h" />
-    <ClInclude Include="Util_LIB\IDAClass\Online_Save.h" />
+    <ClInclude Include="Util_LIB\IDAClass\Online_Save.HPP" />
     <ClInclude Include="Util_LIB\IDAClass\Util_LIB_IDAClass.H" />
     <ClInclude Include="Util_LIB\IDAClass\_Base_Bpt.h" />
     <ClInclude Include="Util_LIB\IDAClass\_Base_Cmt.h" />
     <ClInclude Include="Util_LIB\IDAClass\_Base_Func.h" />
-    <ClInclude Include="Util_LIB\IDAClass\_Base_Segment.h" />
+    <ClInclude Include="Util_LIB\IDAClass\_Base_Segment.hpp" />
     <ClInclude Include="Util_LIB\INI\INI.h" />
     <ClInclude Include="Util_LIB\INI\Util_LIB_INI.H" />
     <ClInclude Include="Util_LIB\Linux\SysCall.H" />
     <ClInclude Include="Util_LIB\Linux\Util_LIB_Linux.H" />
     <ClInclude Include="Util_LIB\Linux\__NR_SysCall.H" />
-    <ClInclude Include="Util_LIB\List\List.h" />
-    <ClInclude Include="Util_LIB\List\Util_LIB_List.H" />
-    <ClInclude Include="Util_LIB\Util_LIB.H" />
+    <ClInclude Include="Util_LIB\Util_LIB.HPP" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

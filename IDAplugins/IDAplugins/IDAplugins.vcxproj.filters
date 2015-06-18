@@ -31,9 +31,6 @@
     <Filter Include="Util_LIB\Char">
       <UniqueIdentifier>{8e58fce1-7990-4661-87aa-6f76b5b8c60e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Util_LIB\List">
-      <UniqueIdentifier>{601b7bb5-f501-45ca-a440-212f56d85548}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Util_LIB\Debug">
       <UniqueIdentifier>{4804820d-003e-4799-a93c-6062d4fc5a4f}</UniqueIdentifier>
     </Filter>
@@ -50,9 +47,6 @@
     </ClInclude>
     <ClInclude Include="IDA_Header.h">
       <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Util_LIB\Util_LIB.H">
-      <Filter>Util_LIB</Filter>
     </ClInclude>
     <ClInclude Include="Util_LIB\INI\Util_LIB_INI.H">
       <Filter>Util_LIB\INI</Filter>
@@ -81,12 +75,6 @@
     <ClInclude Include="Util_LIB\File\Util_LIB_File.H">
       <Filter>Util_LIB\File</Filter>
     </ClInclude>
-    <ClInclude Include="Util_LIB\List\List.h">
-      <Filter>Util_LIB\List</Filter>
-    </ClInclude>
-    <ClInclude Include="Util_LIB\List\Util_LIB_List.H">
-      <Filter>Util_LIB\List</Filter>
-    </ClInclude>
     <ClInclude Include="Util_LIB\Char\Util_Base.h">
       <Filter>Util_LIB\Char</Filter>
     </ClInclude>
@@ -111,12 +99,6 @@
     <ClInclude Include="Util_LIB\IDAClass\_Base_Func.h">
       <Filter>Util_LIB\IDACLASS</Filter>
     </ClInclude>
-    <ClInclude Include="Util_LIB\IDAClass\_Base_Segment.h">
-      <Filter>Util_LIB\IDACLASS</Filter>
-    </ClInclude>
-    <ClInclude Include="Util_LIB\IDAClass\Online_Save.h">
-      <Filter>Util_LIB\IDACLASS</Filter>
-    </ClInclude>
     <ClInclude Include="Util_LIB\ELF\Util_ELF.H">
       <Filter>Util_LIB\ELF</Filter>
     </ClInclude>
@@ -128,6 +110,18 @@
     </ClInclude>
     <ClInclude Include="Util_LIB\ELF\ELF32_Header.H">
       <Filter>Util_LIB\ELF</Filter>
+    </ClInclude>
+    <ClInclude Include="Util_LIB\Dex\Util_Dex.H">
+      <Filter>Util_LIB\Dex</Filter>
+    </ClInclude>
+    <ClInclude Include="Util_LIB\IDAClass\_Base_Segment.hpp">
+      <Filter>Util_LIB\IDACLASS</Filter>
+    </ClInclude>
+    <ClInclude Include="Util_LIB\Util_LIB.HPP">
+      <Filter>Util_LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="Util_LIB\IDAClass\Online_Save.HPP">
+      <Filter>Util_LIB\IDACLASS</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -32,14 +32,14 @@ void Set_ServerThis(){
 	ea_t _EA = get_screen_ea();
 	if ((_EA < Server_StartEA) || (_EA > Server_EndEA))return;
 	if ((_EA - Server_StartEA) == Server_ThisEA)return;
-	Debug::MSG("Set_ServerThis()@ Update\n");
+	Util::MSG("Set_ServerThis()@ Update\n");
 	Server_ThisEA = _EA - Server_StartEA;
 }
 /**
 * @See	更新客户端地址
 */
 void Client_Update(){
-	Debug::MSG("Client_Update()@ Update\n");
+	Util::MSG("Client_Update()@ Update\n");
 	jumpto(Client_StartEA + Server_ThisEA);
 }
 /**
@@ -71,10 +71,10 @@ int Debug_Moude(){
 	ushort _CONFIG = 0;
 	if (RealTime)_CONFIG |= 0x01;
 	if (ForceZero)_CONFIG |= 0x02;
-	Debug::MSG("Debug_Moude()\n");
+	Util::MSG("Debug_Moude()\n");
 	KillTimer(NULL, Handler_Time);
 	if (AskUsingForm_c(ASK_DEBUG_UI, &DebugMode, &_CONFIG, &PageSize) == 0)return 0;
-	Debug::MSG("_CONFIG:%d,PageSize:0x%08x\n", _CONFIG, PageSize);
+	Util::MSG("_CONFIG:%d,PageSize:0x%08x\n", _CONFIG, PageSize);
 	//设置Check获取到数据参数
 	if (_CONFIG & 0x01) RealTime = TRUE;
 	else RealTime = FALSE;

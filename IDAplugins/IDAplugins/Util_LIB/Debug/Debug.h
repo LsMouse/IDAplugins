@@ -2,8 +2,7 @@
 //
 static int Debug_En = TRUE;
 //
-class Debug{
-public:
+namespace Util{
 	static int GetEnable(){
 		return Debug_En;
 	}

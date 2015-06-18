@@ -39,10 +39,10 @@ enum{
 *	5、MAIN_Note   -> 注释模块
 */
 void _stdcall IDAP_run(int arg) {
-	ushort EnDebug = Debug::GetEnable();
+	ushort EnDebug = Util::GetEnable();
 	if (AskUsingForm_c(ASK_MAIN_UI, &Main_Mode, &EnDebug) == 0)return;
-	Debug::SetEnable(EnDebug);
-	Debug::MSG("EnDebug:%d\n", EnDebug);
+	Util::SetEnable(EnDebug);
+	Util::MSG("EnDebug:%d\n", EnDebug);
 	switch (Main_Mode){
 	case MAIN_Export:
 		Export_Module();

@@ -1,6 +1,5 @@
 #include <Util_LIB.HPP>
-class Util_Char{
-public:
+namespace Util{
 /**
 * @See		读取文件一行知道"\r\n"则停止
 * @Param	in_fd -> 文件句柄
