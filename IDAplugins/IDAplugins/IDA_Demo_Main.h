@@ -35,5 +35,6 @@ extern int Arm_Moudle();
 extern int Debug_Moude();
 extern int Note_Moudle();
 extern int Dex_Moudle();
+extern int LlvmRun_Moudle();
 /**/
 #endif

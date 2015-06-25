@@ -23,7 +23,7 @@ namespace Util{
 		return out_line;
 	}
 /**
-* @See		字符串合并
+* @See		字符串合并,并不会修改dst长度，故dst必须容下src
 * @Param	dst -> 原字符串
 * @Param	src -> 添加字符串
 * @Return	out_line -> 返回合并字符串
@@ -68,11 +68,10 @@ namespace Util{
 	static ulong ReadCheck(ea_t inStart) {
 		ulong OutMark = 0;
 		ulong m_i = 0;
-		while (m_i < 0x100){
+		while (m_i < 0x20){
 			OutMark += get_full_byte(inStart + m_i);
 			m_i++;
 		}
 		return OutMark;
 	}
-
 };

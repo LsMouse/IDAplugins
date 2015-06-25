@@ -23,20 +23,19 @@ const char ASK_NOTE_UI[] = "Note Options\n\n\n"
 						"<#加载当前段# ~A~ddSegment:R>\n"
 						"<#从文件中加载# ~F~orm File:R>\n"
 						"<#保存成文件# ~S~ave File:R>\n"
-						"<#输出全部信息# ~H~elper :R>>\n"
+						"<#输出全部信息# ~H~elper :R>\n"
+						"<#清除原有数据# ~C~lean :R>>"
 						"<##配置选择##是否启动多线程处理:C>>\n";
 const char ASK_Setting_UI[] = "Note Setting\n\n\n"
 						"<Mem START:N:32:16::>\n"
 						"<Segname Name:A:15:15::>\n";
-
-
-
 enum{
 	MODE_NOTE_UP,
 	MODE_NOTE_ADD,
 	MODE_NOTE_FILE,
 	MODE_NOTE_SAVE,
 	MODE_NOTE_PRINTF,
+	MODE_NOTE_CLEAN
 };
 /*
 */
@@ -89,8 +88,9 @@ void idaapi idaListComment_getlien2(void *obj, ulong n, char* const *cells)
 			qsnprintf(cells[0], 0x100, "0x%08X", mSave->Seg.at(n - 1).MemStart);
 		}
 		
-		qstrncpy(cells[1], mSave->Seg.at(0).SegName, qstrlen(mSave->Seg.at(n - 1).SegName) + 1);
-		qstrncpy(cells[2], mSave->Seg.at(0).SegName, qstrlen(mSave->Seg.at(n - 1).SegName) + 1);
+		qstrncpy(cells[1], mSave->Seg.at(n - 1).SegName, qstrlen(mSave->Seg.at(n - 1).SegName) + 1);
+		qsnprintf(cells[2], 0x100, "FunSize:0x%d,CmtSize:0x%d,BptSize:0x%0d!", mSave->Seg.at(n - 1).Func.size(), 
+			mSave->Seg.at(n - 1).Cmt.size(), mSave->Seg.at(n - 1).Bpt.size());
 	}
 }
 uint32 idaapi idaListComment_update(void *obj, uint32 n){
@@ -119,6 +119,7 @@ void RunMode(int inMode){
 	char* _AutoBuf = NULL;
 	char* _SegName = NULL;
 	ea_t _SegStart = 0;
+	int choice = 0;
 	char* m_cmt = NULL;
 	switch (inMode){
 	case MODE_NOTE_UP:
@@ -154,6 +155,7 @@ void RunMode(int inMode){
 	case MODE_NOTE_FILE:
 		if (!MulThread)	LoadFile = askfile_c(1, "*.*", "导入注释文件");
 		if (LoadFile == NULL)return;
+		OnSave.Seg.clear();
 		OnSave.Online_Load(LoadFile);
 	break;
 	case MODE_NOTE_SAVE:
@@ -161,9 +163,13 @@ void RunMode(int inMode){
 		OnSave.Save(SaveFile);
 	break;
 	case MODE_NOTE_PRINTF:
-		int choice = choose2(CH_MULTI, -1, -1, -1, -1, (void*)&OnSave, 3, (int*)widths,
+		choice = choose2(CH_MULTI, -1, -1, -1, -1, (void*)&OnSave, 3, (int*)widths,
 			idaListComment_sizer, idaListComment_getlien2, "Note List", -1, 1, NULL, NULL, idaListComment_update, NULL, idaListComment_enter,
 			NULL, (const char * const *)szBuf, NULL);
+		return;
+	break;
+	case MODE_NOTE_CLEAN:
+		OnSave.Seg.clear();
 		return;
 	break;
 	}

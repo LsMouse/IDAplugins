@@ -123,6 +123,18 @@
     <ClInclude Include="Util_LIB\IDAClass\Online_Save.HPP">
       <Filter>Util_LIB\IDACLASS</Filter>
     </ClInclude>
+    <ClInclude Include="Util_LIB\Dex\IDA_Dex.H">
+      <Filter>Util_LIB\Dex</Filter>
+    </ClInclude>
+    <ClInclude Include="Util_LIB\Dex\Common.h">
+      <Filter>Util_LIB\Dex</Filter>
+    </ClInclude>
+    <ClInclude Include="Util_LIB\Dex\DexFile.h">
+      <Filter>Util_LIB\Dex</Filter>
+    </ClInclude>
+    <ClInclude Include="Util_LIB\Dex\SysUtil.h">
+      <Filter>Util_LIB\Dex</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IDA_Demo_Main.cpp">
@@ -144,6 +156,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="OP_DexDump.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="OP_LlvmRun.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

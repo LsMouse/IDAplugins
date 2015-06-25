@@ -18,7 +18,11 @@ int Mode = 0;
 int Dex_Moudle(){
 	if (AskUsingForm_c(ASK_MAIN_UI, &Mode) == 0)return -1;
 	ea_t mStart = get_screen_ea();
-	
+	sval_t mSize = 0;
+	if (asklong(&mSize," ‰»ÎDEXøÌ∂»") == 0)return -1;
+	IDA_Dex::IDA_DunmDex(mStart, mSize);
+//
+
 
 
 

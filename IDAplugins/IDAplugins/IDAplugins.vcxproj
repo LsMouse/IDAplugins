@@ -102,6 +102,7 @@
     <ClCompile Include="OP_Export.cpp" />
     <ClCompile Include="OP_Import.cpp" />
     <ClCompile Include="OP_Debug.cpp" />
+    <ClCompile Include="OP_LlvmRun.cpp" />
     <ClCompile Include="OP_Note.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -112,6 +113,10 @@
     <ClInclude Include="Util_LIB\Char\Util_LIB_Char.H" />
     <ClInclude Include="Util_LIB\Debug\Debug.h" />
     <ClInclude Include="Util_LIB\Debug\Util_LIB_Debug.H" />
+    <ClInclude Include="Util_LIB\Dex\Common.h" />
+    <ClInclude Include="Util_LIB\Dex\DexFile.h" />
+    <ClInclude Include="Util_LIB\Dex\IDA_Dex.H" />
+    <ClInclude Include="Util_LIB\Dex\SysUtil.h" />
     <ClInclude Include="Util_LIB\Dex\Util_Dex.H" />
     <ClInclude Include="Util_LIB\ELF\ELF32.H" />
     <ClInclude Include="Util_LIB\ELF\ELF32_Header.H" />

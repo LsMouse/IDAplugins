@@ -28,6 +28,7 @@ const char ASK_FILEDUMP_UI[] = "Export FileUpdate\n"
 			"<~S~ize:N:32:16::>>\n";
 /*
 *				Dump功能
+*	
 */
 void Dump(){
 	//初始化变量，

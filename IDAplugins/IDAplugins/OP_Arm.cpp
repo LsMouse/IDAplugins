@@ -40,7 +40,7 @@ const char ASK_SYSCALL_UI[] = "STARTITEM  0\n"
 */
 int ModeOption = 0;
 int Arm_Moudle(){
-	int Mode_Bit = 0;
+	static int Mode_Bit = 0;
 	ea_t _ThisEa = get_screen_ea();
 	if (AskUsingForm_c(ASK_ARM_UI, &ModeOption) == 0)return -1;
 	switch (ModeOption){
@@ -68,7 +68,7 @@ int Arm_Moudle(){
 	break;
 	case MODE_ARMOP_SysCall:
 		_MSG("Entry ARM SysCall!\n");
-		//自动获取
+		//自动获取，
 		ulong Sys_No = get_32bit(get_screen_ea()) & 0xFFF;
 		if (AskUsingForm_c(ASK_SYSCALL_UI, &Sys_No) == 0)return 0;
 		if (SysCall::getName(Sys_No) != NULL){
