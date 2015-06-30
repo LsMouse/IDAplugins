@@ -28,6 +28,15 @@ namespace Util{
 		va_end(va);
 	}
 /**
+* @See	打印数据，与printf语句相似
+*/
+	static void _MSG(const char *format, ...){
+		va_list va;
+		va_start(va, format);
+		vmsg(format, va);
+		va_end(va);
+	}
+/**
 * @See	设置调试输出状态
 * @Param inEn -> 设置调试输出状态
 */

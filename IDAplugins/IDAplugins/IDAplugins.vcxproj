@@ -98,7 +98,6 @@
   <ItemGroup>
     <ClCompile Include="OP_Arm.cpp" />
     <ClCompile Include="IDA_Demo_Main.cpp" />
-    <ClCompile Include="OP_DexDump.cpp" />
     <ClCompile Include="OP_Export.cpp" />
     <ClCompile Include="OP_Import.cpp" />
     <ClCompile Include="OP_Debug.cpp" />
@@ -124,7 +123,7 @@
     <ClInclude Include="Util_LIB\ELF\Util_ELF.H" />
     <ClInclude Include="Util_LIB\File\Util_File.h" />
     <ClInclude Include="Util_LIB\File\Util_LIB_File.H" />
-    <ClInclude Include="Util_LIB\IDAClass\AskUI.h" />
+    <ClInclude Include="Util_LIB\IDAClass\IDA.h" />
     <ClInclude Include="Util_LIB\IDAClass\Online_Save.HPP" />
     <ClInclude Include="Util_LIB\IDAClass\Util_LIB_IDAClass.H" />
     <ClInclude Include="Util_LIB\IDAClass\_Base_Bpt.h" />

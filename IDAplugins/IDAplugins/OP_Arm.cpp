@@ -38,43 +38,41 @@ const char ASK_SYSCALL_UI[] = "STARTITEM  0\n"
 *	1、MODE_ARMOP_Code -> 使用ARM指令修改CODE
 *	2、MODE_ARMOP_SysCall -> 注释系统调用
 */
-int ModeOption = 0;
-int Arm_Moudle(){
-	static int Mode_Bit = 0;
+int Arm_Moudle(int inFlag){
+	static int Mode_Bit = MODE_ARMOPC32_JMP;
+	static int ModeOption = 0;
 	ea_t _ThisEa = get_screen_ea();
-	if (AskUsingForm_c(ASK_ARM_UI, &ModeOption) == 0)return -1;
-	switch (ModeOption){
-	case MODE_ARMOP_Code:
-		_MSG("Entry ARM Code!\n");
-		if (AskUsingForm_c(ASK_CODE_UI, &Mode_Bit) == 0)return 0;
-		switch (Mode_Bit){
-		case MODE_ARMOPC16_JMP:
+	if (inFlag != Flag_Again)
+		if (AskUsingForm_c(ASK_ARM_UI, &ModeOption) == 0)
+			return NULL;
+	if (MODE_ARMOP_Code == ModeOption){
+		if (inFlag != Flag_Again)
+			if (AskUsingForm_c(ASK_CODE_UI, &Mode_Bit) == 0)
+				return NULL;
+		if (MODE_ARMOPC16_JMP == Mode_Bit){
 			_ThisEa &= 0xFFFFFFFE;
 			patch_long(_ThisEa, 0xE7FE);
-		break;
-		case MODE_ARMOPC16_NOP:
+		}
+		else if (MODE_ARMOPC16_NOP == Mode_Bit){
 			_ThisEa &= 0xFFFFFFFE;
 			patch_word(_ThisEa, 0xC046);
-		break;
-		case MODE_ARMOPC32_JMP:
+		}
+		else if (MODE_ARMOPC32_JMP == Mode_Bit){
 			_ThisEa &= 0xFFFFFFFC;
 			patch_long(_ThisEa, 0xEAFFFFFE);
-		break;
-		case MODE_ARMOPC32_NOP:
+		}
+		else if (MODE_ARMOPC32_NOP == Mode_Bit){
 			_ThisEa &= 0xFFFFFFFC;
 			patch_long(_ThisEa, 0xE1A00000);
-		break;
 		}
-	break;
-	case MODE_ARMOP_SysCall:
-		_MSG("Entry ARM SysCall!\n");
+	}
+	else if(MODE_ARMOP_SysCall == ModeOption){
 		//自动获取，
 		ulong Sys_No = get_32bit(get_screen_ea()) & 0xFFF;
 		if (AskUsingForm_c(ASK_SYSCALL_UI, &Sys_No) == 0)return 0;
 		if (SysCall::getName(Sys_No) != NULL){
 			set_cmt(get_screen_ea(), SysCall::getName(Sys_No), 1);
 		}
-	break;
 	}
-	return 0;
+	return NULL;
 }

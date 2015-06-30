@@ -1,4 +1,5 @@
 #include <Util_LIB.HPP>
+namespace IDA_Note{
 class _Base_Bpt{
 public:
 	ulong Flags;
@@ -48,5 +49,6 @@ public:
 		StartEA = inIni->GetIntValue(inSecName, "StartEA");
 		Flags = inIni->GetIntValue(inSecName, "Flags");
 	}
+};
 };
 

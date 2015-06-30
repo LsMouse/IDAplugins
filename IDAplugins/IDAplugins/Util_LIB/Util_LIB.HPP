@@ -7,7 +7,6 @@
 #include <ctype.h> 
 #include <string.h> 
 #include <Windows.h>
-
 #include <string> 
 #include <vector>
 #include <list>
@@ -33,6 +32,6 @@
 #include <Linux/Util_LIB_Linux.H>
 /**/
 #include <IDAClass/Util_LIB_IDAClass.H>
-/**/
-#include  <Dex/Util_Dex.H>
+#define Flag_None		0
+#define Flag_Again		1
 #endif

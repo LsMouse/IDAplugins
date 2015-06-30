@@ -29,12 +29,11 @@ plugin_t PLUGIN = {
 	IDAP_hotkey				// Hot key to run the plug-in  
 };
 /**/
-extern int Export_Module();
-extern int Import_Module();
-extern int Arm_Moudle();
-extern int Debug_Moude();
-extern int Note_Moudle();
-extern int Dex_Moudle();
-extern int LlvmRun_Moudle();
+extern int Export_Module(int inFlag);
+extern int Import_Module(int inFlag);
+extern int Arm_Moudle(int inFlag);
+extern int Debug_Moude(int inFlag);
+extern int Note_Moudle(int inFlag);
+extern int LlvmRun_Moudle(int inFlag);
 /**/
 #endif

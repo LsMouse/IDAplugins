@@ -63,9 +63,6 @@
     <ClInclude Include="Util_LIB\Char\UtilChar.h">
       <Filter>Util_LIB\Char</Filter>
     </ClInclude>
-    <ClInclude Include="Util_LIB\IDAClass\AskUI.h">
-      <Filter>Util_LIB\IDACLASS</Filter>
-    </ClInclude>
     <ClInclude Include="Util_LIB\Char\Util_LIB_Char.H">
       <Filter>Util_LIB\Char</Filter>
     </ClInclude>
@@ -135,6 +132,9 @@
     <ClInclude Include="Util_LIB\Dex\SysUtil.h">
       <Filter>Util_LIB\Dex</Filter>
     </ClInclude>
+    <ClInclude Include="Util_LIB\IDAClass\IDA.h">
+      <Filter>Util_LIB\IDACLASS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IDA_Demo_Main.cpp">
@@ -153,9 +153,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="OP_Note.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="OP_DexDump.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="OP_LlvmRun.cpp">

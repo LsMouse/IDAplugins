@@ -1,7 +1,7 @@
 ﻿#define __IDA_DEMO_MAIN_C_
 #include"IDA_Header.H"
 #include"IDA_Demo_Main.h"
-
+using namespace Util;
 int _stdcall IDAP_init(void) {
 //	Debug_Run(msg("IDA_Demo Run IDAP_init\n"));
 //	SetTimer(NULL, 0, 1000, (TIMERPROC)IDA_TIMER);
@@ -18,8 +18,8 @@ const char ASK_MAIN_UI[] = "STARTITEM  0\n\n"
 	"<#ARM相关功能# ~A~RM:R:32:16:>\n"
 	"<#调试# ~D~ebug:R:32:16:>\n"
 	"<#注释# ~N~ote:R:32:16:>\n"
-	"<#DexDump# ~D~ex Dump:R:32:16:>"
-	"<#Llvm Run# ~L~lvm 花指令自动运行:R:32:16:>>"
+	"<#Llvm Run# ~L~lvm 花指令自动运行:R:32:16:>\n"
+	"<#上一次程序运行# ~O~ld Mode:R:32:16:>>"
 	"<##调试选择##是否打印信息:C>>\n";
 enum{
 	MAIN_Export,
@@ -27,8 +27,8 @@ enum{
 	MAIN_ARM,
 	MAIN_Debug,
 	MAIN_Notes,
-	MAIN_DexDump,
-	MAIN_LlvmRun
+	MAIN_LlvmRun,
+	MAIN_OldMode
 }MAIN_MODE_ENUM;
 /*
 *				模式说明
@@ -37,37 +37,41 @@ enum{
 *	3、MAIN_ARM    -> ARM模块
 *	4、MAIN_Debug  -> 调试模块
 *	5、MAIN_Note   -> 注释模块
-*	5、MAIN_DexDump-> DexDump
+*	6、MAIN_LlvmRun -> Llvm调试
+*	7、Old_Mode	   ->最后运行模式
 */
 void _stdcall IDAP_run(int arg) {
 	//主面板模式选择，定在全局变量是为能自动保存模式
 	static int Main_Mode = 0;
+	int mMode = MAIN_OldMode;
 	ushort EnDebug = Util::GetEnable();
-	if (AskUsingForm_c(ASK_MAIN_UI, &Main_Mode, &EnDebug) == 0)return;
+	if (AskUsingForm_c(ASK_MAIN_UI, &mMode, &EnDebug) == 0)return;
 	Util::SetEnable(EnDebug);
-	Util::MSG("EnDebug:%d\n", EnDebug);
-	switch (Main_Mode){
-	case MAIN_Export:
-		Export_Module();
-		break;
-	case MAIN_Import:
-		Arm_Moudle();
-		break;
-	case MAIN_ARM:
-		Arm_Moudle();
-		break;
-	case MAIN_Debug:
-		Debug_Moude();
-		break;
-	case MAIN_Notes:
-		Note_Moudle();
-		break;
-	case MAIN_DexDump:
-		Dex_Moudle();
-		break;
-	case MAIN_LlvmRun:
-		LlvmRun_Moudle();
-		break;
-	return;
+	//设置运行模式和运行状态
+	if (mMode != MAIN_OldMode){
+		Main_Mode = mMode;
+		mMode = 0;
+	}
+	else{
+		mMode = Flag_Again;
+	}
+	//选择子模块
+	if (MAIN_Export == Main_Mode){
+		Export_Module(mMode);
+	}
+	else if (MAIN_Import == Main_Mode){
+		Import_Module(mMode);
+	}
+	else if (MAIN_ARM == Main_Mode){
+		Arm_Moudle(mMode);
+	}
+	else if (MAIN_Debug == Main_Mode){
+		Debug_Moude(mMode);
+	}
+	else if (MAIN_Notes == Main_Mode){
+		Note_Moudle(mMode);
+	}
+	else if (MAIN_LlvmRun == Main_Mode){
+		LlvmRun_Moudle(mMode);
 	}
 } 

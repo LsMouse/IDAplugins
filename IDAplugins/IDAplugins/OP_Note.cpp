@@ -51,7 +51,7 @@ void idaapi idaListComment_enter(void * obj, uint32 n)
 	{
 		return;
 	}
-	if (mSave->Seg.at(n - 1).MemStart == 0xFFFFFFFF){
+	if (mSave->Seg.at(n - 1).MemStart == BADADDR){
 		ea_t mStart = get_screen_ea(); 
 		char mName[MAXSTR];
 		sprintf(mName, MAXSTR, "Debug");
@@ -60,9 +60,8 @@ void idaapi idaListComment_enter(void * obj, uint32 n)
 		mSave->Seg.at(n - 1).SegName = qstrdup(mName);
 		sprintf(mName, MAXSTR, "IsAdd_Name:%s", mSave->Seg.at(n - 1).SegName);
 		set_cmt(mStart, mName, 1);
+		mSave->Seg.at(n - 1).To_IDAMem(mSave->Seg.at(n - 1).MemStart);
 	}
-	jumpto(mSave->Seg.at(n - 1).MemStart);
-
 }
 void idaapi idaListComment_getlien2(void *obj, ulong n, char* const *cells)
 {
@@ -81,7 +80,7 @@ void idaapi idaListComment_getlien2(void *obj, ulong n, char* const *cells)
 	}
 	else
 	{
-		if (mSave->Seg.at(n - 1).MemStart == 0xFFFFFFFF){
+		if (mSave->Seg.at(n - 1).MemStart == BADADDR){
 			qsnprintf(cells[0], 0x100, "未设置地址");
 		}
 		else{
@@ -109,6 +108,7 @@ uint32 idaapi idaListComment_update(void *obj, uint32 n){
 	mSave->Seg.at(n - 1).SegName = qstrdup(mName);
 	sprintf(mName, MAXSTR, "IsAdd_Name:%s", mSave->Seg.at(n - 1).SegName);
 	set_cmt(mStart, mName, 1);
+	mSave->Seg.at(n - 1).To_IDAMem(mSave->Seg.at(n - 1).MemStart);
 	return 1;
 }
 /*
@@ -134,23 +134,18 @@ void RunMode(int inMode){
 		OnSave.Save(SaveFile);
 	break;
 	case MODE_NOTE_ADD:
+		OnSave.Seg.clear();
 		_SegStart = getseg(_ea)->startEA;
-		m_cmt = _Base_Cmt::GetCmt(_SegStart, 1);
-		if (m_cmt  != NULL){
-			if (strncmp(m_cmt, "IsAdd_Name:", strlen("IsAdd_Name:")) == 0){
-				return;
-			}
-		}
-		free(m_cmt);
-		_SegName = askstr(1, "Debug", "请输入添加的段名");
+		_SegName = IDA::GetSegmentName(_SegStart);
+		_SegName = askstr(1, _SegName, "请输入添加的段名");
 		if (_SegName == NULL){
-			_MSG("输入的名字无效\n");
+			OnSave.AddSegment(_ea,NULL);
 			return;
 		}
 		m_cmt = (char*)Util::Alloc(1024);
 		sprintf(m_cmt, 1024, "IsAdd_Name:%s", _SegName);
 		set_cmt(getseg(_ea)->startEA, m_cmt, 1);
-		OnSave.AddSegment(getseg(_ea), _SegName);
+		OnSave.AddSegment(_ea, _SegName);
 	break;
 	case MODE_NOTE_FILE:
 		if (!MulThread)	LoadFile = askfile_c(1, "*.*", "导入注释文件");
@@ -178,10 +173,9 @@ void RunMode(int inMode){
 * @See	WINAPI多线程
 */
 DWORD WINAPI Mul_Hander(LPVOID lpParam){
-	Util::MSG("Mul_Hander(%d)@ is Run \n", NoteMode);
+	Util::MSG("启用多线程\n");
 	RunMode(NoteMode);
 	WorkIng = FALSE;
-	Util::MSG("Mul_Hander(%d)@ is End\n", NoteMode);
 	CloseHandle(HandlerNo);
 	return 0;
 }
@@ -194,21 +188,19 @@ DWORD WINAPI Mul_Hander(LPVOID lpParam){
 *配置说明
 *	0x01 ->	是否启用多线程
 */
-int Note_Moudle(){
-	int _Config = MulThread;
+int Note_Moudle(int inFlag){
 	if (WorkIng){
 		_MSG("之前操作未处理完毕，请稍后再试\n");
-		return 0;
+		return NULL;
 	}
-	if (AskUsingForm_c(ASK_NOTE_UI, &NoteMode,&_Config) == 0)return -1;
-	MulThread = _Config;
-	if ((_Config == 0) || (NoteMode == MODE_NOTE_PRINTF) || (NoteMode == MODE_NOTE_ADD)){
-		Util::MSG("不启用多线程\n");
+	if (inFlag != Flag_Again)
+		if (AskUsingForm_c(ASK_NOTE_UI, &NoteMode, &MulThread) == 0)
+			return NULL;
+	if ((MulThread == 0) || (NoteMode == MODE_NOTE_PRINTF) || (NoteMode == MODE_NOTE_ADD)){
 		WorkIng = FALSE;
 		RunMode(NoteMode);
 	}
 	else{
-		Util::MSG("启用多线程\n");
 		if (NoteMode == MODE_NOTE_SAVE){
 			SaveFile = askfile_c(1, "*.ini", "保存注释文件");
 			if (SaveFile == NULL)return 0;
@@ -226,5 +218,5 @@ int Note_Moudle(){
 		WorkIng = TRUE;
 		HandlerNo = CreateThread(NULL, 0, Mul_Hander, NULL, 0, NULL);
 	}
-	return 0;
+	return NULL;
 }

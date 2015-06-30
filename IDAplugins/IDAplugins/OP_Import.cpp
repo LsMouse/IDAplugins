@@ -1,13 +1,15 @@
 #define __IDA_Import_C_
 #include"IDA_Header.H"
-const char ASK_Import_UI[] = "STARTITEM  0\n"
-				"設置DUMP地址,当SIZE为0时才会使用END\n"
+//以下定义UI和模式枚举
+const char ASK_Import_UI[] = "Import Options\n"
 				"<IDA START:N:32:16::>\n"
 				"<IDA END:N:32:16::>\n"
 				"<IDA SIZE:N:32:16::>\n"
 				"<FILE START:N:32:16::>\n";
-
-int Import_Module(){
+/*
+* @See 模式说明
+*/
+int Import_Module(int inFlag){
 	char* m_filepath = askfile_c(0, "*.*", "需要导入的文件");
 	if (m_filepath == NULL)return -1;
 	FILE* mFile = fopen(m_filepath, "rb");
